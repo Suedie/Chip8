@@ -1,7 +1,9 @@
+using System.Diagnostics;
+
 namespace Chip8;
 
 class Processor {
-    public uint PC = 0;
+    public uint PC = 0x200;
 
     public ushort I = 0;
 
@@ -14,7 +16,7 @@ class Processor {
     public uint Fetch() {
 
         uint part1 = memory.MemoryArray[PC];
-        part1 = part1 << 4;
+        part1 = part1 << 8;
         uint opcode = part1 + memory.MemoryArray[PC + 1];
 
         PC += 2;
