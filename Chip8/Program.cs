@@ -10,7 +10,7 @@ class Program
 
     public static void Main(string[] args)
     {
-        Window.Init(800, 600, "Hello World!");
+        Window.Init(832, 416, "CHIP-8");
 
         Processor game = new Processor();
         game.memory.LoadRom("/home/deck/vscodeprojects/Chip8/Chip8/roms/IBM Logo.ch8");
@@ -21,13 +21,26 @@ class Program
             Graphics.ClearBackground(Color.White);
 
             game.Decode(game.Fetch());
-            Console.WriteLine(game.display.PixelsToString());
-            
-            Graphics.DrawText(game.display.PixelsToString(), 0, 0, 20, Color.Red);
+
+            Draw(game.display.Pixels);
             
             Graphics.EndDrawing();
         }
         
         Window.Close();
+    }
+
+    public static void Draw(byte[,] pixels) {
+
+        Graphics.BeginDrawing();
+        Graphics.ClearBackground(Color.Black);
+
+        for (int i = 0; i < pixels.GetLength(0); i++) {
+            for (int j = 0; j < pixels.GetLength(1); j++) {
+                if(pixels[i, j] == 1) {
+                    Graphics.DrawRectangle(i*13, j*13, 13, 13, Color.White);
+                }
+            }
+        }
     }
 }
