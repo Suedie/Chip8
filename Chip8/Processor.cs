@@ -114,15 +114,20 @@ class Processor {
 
         Registers[0xF] = 0;
 
-        uint spriteRow = memory.MemoryArray[I];
-        for (uint h = 0; h < N || h + posY < display.Pixels.GetLength(0); h++) {
-            for (uint w = 0; w < 8 || w + posX < display.Pixels.GetLength(1); w++) {
-                uint pixel = spriteRow & (uint) Math.Pow(2, 7 - w);
-                if (pixel == 1 && display.Pixels[posY, posX+w] == 1) {
-                    display.Pixels[posY+w, posX+w] = 0;
+        for (int h = 0; h < N; h++) {
+            int spriteRow = memory.MemoryArray[I + h];
+            for (int w = 0; w < 8; w++) {
+                int pixel = (spriteRow >> (7 - w)) & 1;
+
+                if (posX + w >= 64 || posY + h >= 32) {
+                    break;
+                }
+
+                if (pixel == 1 && display.Pixels[posX+w, posY+h] == 1) {
+                    display.Pixels[posX + w, posY + h] = 0;
                     Registers[0xF] = 1;
                 } else if (pixel == 1) {
-                    display.Pixels[posY+w, posX+w] = 1;
+                    display.Pixels[posX + w, posY + h] = 1;
                 }
             }
         }
