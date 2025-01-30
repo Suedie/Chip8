@@ -19,15 +19,22 @@ class Processor {
     }
 
     public void Decode(uint opcode) {
-        uint firstNibble = (opcode & 0b_1100_0000) >> 6;
-        uint secondNibble = (opcode & 0b_0011_0000) >> 4;
-        uint thirdNibble = (opcode & 0b_0000_1100) >> 2;
-        uint fourthNibble = opcode & 0b_0000_0011;
+        uint firstNibble = (opcode & 0xF000) >> 12;
+        uint X = (opcode & 0x0F00) >> 8; //second nibble
+        uint Y = (opcode & 0x00F0) >> 4; //third nibble
+        uint N = opcode & 0x000F; //fourth nibble
+        uint NN = opcode & 0x00FF;
+        uint NNN = opcode & 0x0FFF;
 
         switch (firstNibble) {
+            case 0x0 when opcode == 0x00E0:
+            break;
+            case 0x0 when opcode == 0x00EE:
+            break;
             case 0x0:
             break;
             case 0x1:
+
             break;
             case 0x2:
             break;
