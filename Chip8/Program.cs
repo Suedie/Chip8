@@ -12,7 +12,11 @@ class Program
     {
         Window.Init(832, 416, "CHIP-8");
 
-        Processor game = new Processor();
+        IFont font = new Font();
+        Memory memory = new Memory(font);
+        Display display = new Display();
+
+        Processor game = new Processor(memory, display);
         game.memory.LoadRom("/home/deck/vscodeprojects/Chip8/Chip8/roms/IBM Logo.ch8");
 
         while (!Window.ShouldClose())

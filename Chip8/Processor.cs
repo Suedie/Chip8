@@ -9,9 +9,13 @@ class Processor {
 
     public byte[] Registers = new byte[0x10];
 
-    public Memory memory = new Memory();
+    public Memory memory;
 
-    public Display display = new Display();
+    public Display display;
+    public Processor (Memory memory, Display display) {
+        this.memory = memory;
+        this.display = display;
+    }
 
     public uint Fetch() {
 
