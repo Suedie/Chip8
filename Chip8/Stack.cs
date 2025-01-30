@@ -2,5 +2,5 @@ namespace Chip8;
 
 public class Stack
 {
-    public Stack<short> stack = new Stack<short>(16);
+    public Stack<ushort> stack = new Stack<ushort>(16);
 }
