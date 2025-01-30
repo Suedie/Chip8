@@ -1,12 +1,12 @@
 namespace Chip8;
 
-public class Font
+public class Font : IFont
 {
     
     //8-bits represent one row of 8 pixels.
     //Each number and letter is 5 pixels tall.
     //Font represents numbers from 0-F in hex
-    public byte[] TextFont =
+    public byte[] TextFont {get; set;} =
     {
         0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
         0x20, 0x60, 0x20, 0x20, 0x70, // 1
