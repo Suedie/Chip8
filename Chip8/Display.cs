@@ -4,6 +4,12 @@ public class Display
 {
     public byte[,] Pixels = new byte[64,32];
 
+    public void ClearDisplay() {
+        Array.Clear(Pixels, 0, Pixels.Length);
+    }
+
+    
+
 
     public string PixelsToString() {
 
