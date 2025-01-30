@@ -6,18 +6,16 @@ public class Memory
     //Each address is 1-byte
     //This translates to 4kB of RAM
     public byte[] RAM{get;} = new Byte [0x1000];
-    private readonly IFont _font;
 
     private readonly Stack<ushort> _stack = new Stack<ushort>(16);
 
     public Memory(IFont font) {
-        LoadFont();
-        _font = font;
+        LoadFont(font);
     }
 
     //Puts the font data at 0x50 (80) which has become an unofficial standard
-    public void LoadFont() {
-        byte[] _tmpFont = _font.TextFont;
+    public void LoadFont(IFont font) {
+        byte[] _tmpFont = font.TextFont;
 
         Array.Copy(_tmpFont, 0, RAM, 0x50, _tmpFont.Length);
     }

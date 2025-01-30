@@ -30,8 +30,8 @@ class Processor {
 
     public void Decode(uint opcode) {
         uint firstNibble = (opcode & 0xF000) >> 12;
-        uint X = (opcode & 0x0F00) >> 8; //second nibble
-        uint Y = (opcode & 0x00F0) >> 4; //third nibble
+        uint X = (opcode & 0x0F00) >> 8; //X is the address to Register VX
+        uint Y = (opcode & 0x00F0) >> 4; //Y is the address to Register VY
         uint N = opcode & 0x000F; //fourth nibble
         uint NN = opcode & 0x00FF;
         uint NNN = opcode & 0x0FFF;
