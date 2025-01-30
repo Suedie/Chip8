@@ -7,7 +7,7 @@ class Processor {
 
     public ushort I = 0;
 
-    public byte[] Registers = new byte[0xF];
+    public byte[] Registers = new byte[0x10];
 
     public Memory memory = new Memory();
 
