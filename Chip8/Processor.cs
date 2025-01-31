@@ -208,122 +208,154 @@ class Processor {
         }
     }
 
+    //00E0
     private void ClearDisplay() {
         _display.ClearDisplay();
     }
 
+    //00EE
     private void Return() {
         PC = _memory.Pop();
     }
 
+    //1NNN
+    private void Jump(uint NNN) {
+        PC = NNN;
+    }
+
+    //2NNN
     private void CallSubroutine(uint NNN) {
         _memory.Push((ushort)PC);
         PC = NNN;
     } 
 
-    private void Jump(uint NNN) {
-        PC = NNN;
-    }
-
+    //3XNN
     private void SkipIfEqual(uint X, uint NN) {
         if (Registers[X] == NN)
             PC += 2;
     }
 
+    //4XNN
     private void SkipIfNotEqual(uint X, uint NN) {
         if (Registers[X] != NN)
             PC += 2;
     }
 
+    //5XY0
     private void SkipIfRegistersEqual(uint X, uint Y) {
         if(Registers[X] == Registers[Y])
             PC+= 2;
     }
 
+    //9XY0
     private void SkipIfRegistersNotEqual(uint X, uint Y) {
         if(Registers[X] != Registers[Y])
             PC+= 2;
     }
 
+    //6XNN
     private void SetRegister(uint X, uint NN) {
         Registers[X] = (byte) NN;
     }
 
+    //7XNN
     private void AddToRegister(uint X, uint NN) {
         Registers[X] += (byte) NN;
     }
 
+    //8XY0
     private void SetVXToVY(uint X, uint Y) {
         Registers[X] = Registers[Y];
     }
 
+    //8XY1
     private void BinaryOR(uint X, uint Y) {
         Registers[X] = (byte) (Registers[X] | Registers[Y]);
     }
 
+    //8XY2
     private void BinaryAND(uint X, uint Y) {
         Registers[X] = (byte) (Registers[X] & Registers[Y]);
     }
 
+    //8XY3
     private void LogicalXOR(uint X, uint Y) {
         Registers[X] = (byte) (Registers[X] ^ Registers[Y]);
     }
 
+    //8XY4
     private void AddRegisterVYToVX(uint X, uint Y) {
-        if (Registers[X] + Registers[Y] > 255) {
-            Registers[0xF] = 1;
-        } else {
-            Registers[0xF] = 0;
-        }
+        bool overflows = Registers[X] + Registers[Y] > 255;
 
         Registers[X] = (byte) ((Registers[X] + Registers[Y]) % 256);
-    }
 
-    private void SubtractVY(uint X, uint Y) {
-        if (Registers[X] >= Registers[Y]) {
+        if (overflows) {
             Registers[0xF] = 1;
         } else {
             Registers[0xF] = 0;
         }
+    }
+
+    //8XY5
+    private void SubtractVY(uint X, uint Y) {
+        bool notUnderflows = Registers[X] >= Registers[Y];
 
         Registers[X] = (byte) ((Registers[X] - Registers[Y]) % 256);
+
+        if (notUnderflows) {
+            Registers[0xF] = 1;
+        } else {
+            Registers[0xF] = 0;
+        }
     }
 
+    //8XY7
     private void SubtractVX(uint X, uint Y) {
-        if (Registers[Y] >= Registers[X]) {
+        bool notUnderflows = Registers[Y] >= Registers[X];
+
+        Registers[X] = (byte) ((Registers[Y] - Registers[X]) % 256);
+
+        if (notUnderflows) {
             Registers[0xF] = 1;
         } else {
             Registers[0xF] = 0;
         }
 
-        Registers[X] = (byte) ((Registers[Y] - Registers[X]) % 256);
     }
 
+    //8XY6
     private void ShiftRight(uint X, uint Y) {
         Registers[X] = Registers[Y];
 
-        Registers[0xF] = (byte) (Registers[X] & 0b_0000_0001);
+        byte underflow = (byte) (Registers[X] & 0b_0000_0001);
 
         Registers[X] = (byte) (Registers[X] >> 1);
+
+        Registers[0xF] = underflow;
     }
 
+    //8XYE
     private void ShiftLeft(uint X, uint Y) {
         Registers[X] = Registers[Y];
 
-        Registers[0xF] = (byte) (Registers[X] & 0b_1000_0000);
+        byte overflow = (byte) ((Registers[X] & 0b_1000_0000) >> 7);
 
         Registers[X] = (byte) (Registers[X] << 1);
+
+        Registers[0xF] = overflow;
     }
 
-
+    //ANNN
     private void SetIndex(uint NNN) {
         I = (ushort) NNN;
     }
 
+    //BNNN
     private void JumpOffset(uint NNN) {
         PC = NNN + Registers[0];
     }
 
+    //CXNN
     private void RandomNumber(uint X, uint NN) {
         Random rnd = new Random();
         int num = rnd.Next(0xFF);
@@ -331,6 +363,7 @@ class Processor {
         Registers[X] = (byte) (NN & num);
     }
 
+    //DXYN
     private void DrawToDisplay(uint X, uint Y, uint N) {
         int posX = Registers[X] % 65;
         int posY = Registers[Y] % 33;
@@ -356,6 +389,7 @@ class Processor {
         }
     }
 
+    //EX9E
     private void SkipIfKeyPressed(uint X) {
         byte key = (byte) (Registers[X] & 0x0F);
 
@@ -364,6 +398,7 @@ class Processor {
         }
     }
 
+    //EXA1
     private void SkipIfKeyUp(uint X) {
         byte key = (byte) (Registers[X] & 0x0F);
 
@@ -372,18 +407,22 @@ class Processor {
         }
     }
 
+    //FX07
     private void ReadTimer(uint X) {
         Registers[X] = _delay.Register;
     }
 
+    //FX15
     private void SetDelayTimer(uint X) {
         _delay.Register = Registers[X];
     }
 
+    //FX18
     private void SetSoundTimer(uint X) {
         _sound.Register = Registers[X];
     }
 
+    //FX1E
     private void AddToIndex(uint X) {
         if (I + Registers[X] > 0x0FFF) {
             Registers[0xF] = 1;
@@ -392,6 +431,7 @@ class Processor {
         I += (byte) (Registers[X] % 0x10000);
     }
 
+    //FX0A
     private void WaitForKey(uint X) {
         if (_keyboard.ContainsKey(Input.GetKeyPressed())) {
             Registers[X] = _keyboard.KeyToHex(Input.GetKeyPressed());
@@ -400,10 +440,12 @@ class Processor {
         }
     }
 
+    //FX29
     private void GetFontCharacter(uint X) {
         I = (ushort) (0x50 + ((X & 0x0F) * 0x5));
     }
 
+    //FX33
     private void BinaryCodedDecimalConversion(uint X) {
         byte num = Registers[X];
 
@@ -416,12 +458,14 @@ class Processor {
         _memory.RAM[I+2] = (byte) ones;
     }
 
+    //FX55
     private void StoreRegistersIntoMemory(uint X) {
         for (int i = 0; i <= X; i++ ) {
             _memory.RAM[I+i] = Registers[i];
         }
     }
 
+    //FX65
     private void LoadMemoryIntoRegisters(uint X) {
         for (int i = 0; i <= X; i++ ) {
             Registers[i] = _memory.RAM[I+i];

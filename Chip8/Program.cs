@@ -9,7 +9,7 @@ class Program
 
     public static void Main(string[] args)
     {
-        Window.Init(832, 416, "CHIP-8");
+        Window.Init(1280, 640, "CHIP-8");
 
         IFont font = new Font();
         Memory memory = new Memory(font);
@@ -23,7 +23,7 @@ class Program
         sound.init(Raylib_CSharp.Time.GetFrameTime());
 
         Processor game = new Processor(memory, display, keypad, delay, sound);
-        game.LoadGame("/home/deck/vscodeprojects/Chip8/Chip8/roms/3-corax+.ch8");
+        game.LoadGame("/home/deck/vscodeprojects/Chip8/Chip8/roms/4-flags.ch8");
 
         while (!Window.ShouldClose())
         {
@@ -52,7 +52,7 @@ class Program
         for (int i = 0; i < pixels.GetLength(0); i++) {
             for (int j = 0; j < pixels.GetLength(1); j++) {
                 if(pixels[i, j] == 1) {
-                    Graphics.DrawRectangle(i*13, j*13, 13, 13, Color.White);
+                    Graphics.DrawRectangle(i*20, j*20, 20, 20, Color.White);
                 }
             }
         }
