@@ -1,4 +1,4 @@
-using System.Diagnostics;
+using Raylib_CSharp.Interact;
 
 namespace Chip8;
 
@@ -9,19 +9,29 @@ class Processor {
 
     public byte[] Registers = new byte[0x10];
 
-    public Memory memory;
+    private readonly Memory _memory;
 
-    public Display display;
+    private readonly Display _display;
+
+    private Keypad Keypad = new Keypad();
     public Processor (Memory memory, Display display) {
-        this.memory = memory;
-        this.display = display;
+        this._memory = memory;
+        this._display = display;
+    }
+
+    public void LoadGame(string filepath) {
+        _memory.LoadRom(filepath);
+    }
+
+    public byte[,] GetScreenMatrix() {
+        return _display.Pixels;
     }
 
     public uint Fetch() {
 
-        uint part1 = memory.RAM[PC];
+        uint part1 = _memory.RAM[PC];
         part1 = part1 << 8;
-        uint opcode = part1 + memory.RAM[PC + 1];
+        uint opcode = part1 + _memory.RAM[PC + 1];
 
         PC += 2;
 
@@ -146,15 +156,15 @@ class Processor {
     }
 
     private void ClearDisplay() {
-        display.ClearDisplay();
+        _display.ClearDisplay();
     }
 
     private void Return() {
-        PC = memory.Pop();
+        PC = _memory.Pop();
     }
 
     private void CallSubroutine(uint NNN) {
-        memory.Push((ushort)PC);
+        _memory.Push((ushort)PC);
         PC = NNN;
     } 
 
@@ -275,7 +285,7 @@ class Processor {
         Registers[0xF] = 0;
 
         for (int h = 0; h < N; h++) {
-            int spriteRow = memory.RAM[I + h];
+            int spriteRow = _memory.RAM[I + h];
             for (int w = 0; w < 8; w++) {
                 int pixel = (spriteRow >> (7 - w)) & 1;
 
@@ -283,13 +293,29 @@ class Processor {
                     break;
                 }
 
-                if (pixel == 1 && display.Pixels[posX+w, posY+h] == 1) {
-                    display.Pixels[posX + w, posY + h] = 0;
+                if (pixel == 1 && _display.Pixels[posX+w, posY+h] == 1) {
+                    _display.Pixels[posX + w, posY + h] = 0;
                     Registers[0xF] = 1;
                 } else if (pixel == 1) {
-                    display.Pixels[posX + w, posY + h] = 1;
+                    _display.Pixels[posX + w, posY + h] = 1;
                 }
             }
+        }
+    }
+
+    private void SkipIfKeyPressed(uint X) {
+        byte key = (byte) (Registers[X] & 0x0F);
+
+        if (Input.IsKeyPressed((KeyboardKey) Keypad.HexToKey(key))) {
+            PC += 2;
+        }
+    }
+
+    private void SkipIfKeyUp(uint X) {
+        byte key = (byte) (Registers[X] & 0x0F);
+
+        if (Input.IsKeyUp((KeyboardKey) Keypad.HexToKey(key))) {
+            PC += 2;
         }
     }
 
@@ -299,6 +325,18 @@ class Processor {
         }
 
         I += (byte) (Registers[X] % 0xFFFF);
+    }
+
+    private void WaitForKey(uint X) {
+        if (Keypad.ContainsKey(Input.GetKeyPressed())) {
+            Registers[X] = Keypad.KeyToHex(Input.GetKeyPressed());
+        } else {
+            PC -= PC;
+        }
+    }
+
+    private void GetFontCharacter(uint X) {
+        I = (ushort) (0x50 + ((X & 0x0F) * 0x5));
     }
 
 }
