@@ -1,6 +1,8 @@
 namespace Chip8;
 
-class SoundTimer {
+class SoundTimer : Timer {
 
     
+
+
 }
