@@ -1,7 +1,6 @@
 ﻿using Raylib_CSharp.Colors;
 using Raylib_CSharp.Rendering;
 using Raylib_CSharp.Windowing;
-using Chip8;
 
 namespace Chip8;
 
@@ -17,7 +16,7 @@ class Program
         Display display = new Display();
 
         Processor game = new Processor(memory, display);
-        game.memory.LoadRom("/home/deck/vscodeprojects/Chip8/Chip8/roms/IBM Logo.ch8");
+        game.LoadGame("/home/deck/vscodeprojects/Chip8/Chip8/roms/IBM Logo.ch8");
 
         while (!Window.ShouldClose())
         {
@@ -26,7 +25,7 @@ class Program
 
             game.Decode(game.Fetch());
 
-            Draw(game.display.Pixels);
+            DrawMatrix(game.GetScreenMatrix());
             
             Graphics.EndDrawing();
         }
@@ -34,7 +33,7 @@ class Program
         Window.Close();
     }
 
-    public static void Draw(byte[,] pixels) {
+    public static void DrawMatrix(byte[,] pixels) {
 
         Graphics.BeginDrawing();
         Graphics.ClearBackground(Color.Black);
