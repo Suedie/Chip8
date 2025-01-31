@@ -10,7 +10,8 @@ class Program
 
     public static void Main(string[] args)
     {
-        float accumulatedTime = Raylib_CSharp.Time.GetFrameTime();
+        float accumulatedTime = 0f;
+        float targetFrameTime = 1f/60f;
 
         Window.Init(1280, 640, "CHIP-8");
 
@@ -26,22 +27,22 @@ class Program
         sound.init(Raylib_CSharp.Time.GetFrameTime());
 
         Processor game = new Processor(memory, display, keypad, delay, sound);
-        game.LoadGame("../Chip8/roms/6-keypad.ch8");
+        game.LoadGame("/home/deck/vscodeprojects/Chip8/Chip8/roms/6-keypad.ch8");
+        
+        Raylib_CSharp.Time.SetTargetFPS(60);
+
 
         while (!Window.ShouldClose())
         {
-            Graphics.BeginDrawing();
-            Graphics.ClearBackground(Color.White);
-
             delay.Update(Raylib_CSharp.Time.GetFrameTime());
             sound.Update(Raylib_CSharp.Time.GetFrameTime());
 
             accumulatedTime += Raylib_CSharp.Time.GetFrameTime();
 
-            if (accumulatedTime >= (float) 1/60) {
-                game.Decode(game.Fetch());
-                accumulatedTime -= (float) 1/60;
-            }
+            game.Decode(game.Fetch());
+            
+            Graphics.BeginDrawing();
+            Graphics.ClearBackground(Color.White);
 
             DrawMatrix(game.GetScreenMatrix());
             

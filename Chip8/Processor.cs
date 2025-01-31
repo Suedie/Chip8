@@ -35,9 +35,8 @@ class Processor {
     }
 
     public uint Fetch() {
-
         uint part1 = _memory.RAM[PC];
-        part1 = part1 << 8;
+        part1 = part1 << 8;       
         uint opcode = part1 + _memory.RAM[PC + 1];
 
         PC += 2;
@@ -393,7 +392,7 @@ class Processor {
     private void SkipIfKeyPressed(uint X) {
         byte key = (byte) (Registers[X] & 0x0F);
 
-        if (Input.IsKeyPressed( (KeyboardKey)_keyboard.HexToKey(key))) {
+        if (Input.IsKeyDown( (KeyboardKey)_keyboard.HexToKey(key))) {
             PC += 2;
         }
     }
