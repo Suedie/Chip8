@@ -128,7 +128,7 @@ class Processor {
                     SubtractVX(X, Y);
                     break;
 
-                    case 0x8:
+                    case 0xE:
                     ShiftLeft(X, Y);
                     break;
                 }
@@ -276,7 +276,7 @@ class Processor {
             Registers[0xF] = 0;
         }
 
-        Registers[X] = (byte) ((Registers[X] + Registers[Y]) % 255);
+        Registers[X] = (byte) ((Registers[X] + Registers[Y]) % 256);
     }
 
     private void SubtractVY(uint X, uint Y) {
@@ -286,7 +286,7 @@ class Processor {
             Registers[0xF] = 0;
         }
 
-        Registers[X] = (byte) ((Registers[X] - Registers[Y]) % 255);
+        Registers[X] = (byte) ((Registers[X] - Registers[Y]) % 256);
     }
 
     private void SubtractVX(uint X, uint Y) {
@@ -296,7 +296,7 @@ class Processor {
             Registers[0xF] = 0;
         }
 
-        Registers[X] = (byte) ((Registers[Y] - Registers[X]) % 255);
+        Registers[X] = (byte) ((Registers[Y] - Registers[X]) % 256);
     }
 
     private void ShiftRight(uint X, uint Y) {
@@ -332,8 +332,8 @@ class Processor {
     }
 
     private void DrawToDisplay(uint X, uint Y, uint N) {
-        int posX = Registers[X] % 64;
-        int posY = Registers[Y] % 32;
+        int posX = Registers[X] % 65;
+        int posY = Registers[Y] % 33;
 
         Registers[0xF] = 0;
 
@@ -389,7 +389,7 @@ class Processor {
             Registers[0xF] = 1;
         }
 
-        I += (byte) (Registers[X] % 0xFFFF);
+        I += (byte) (Registers[X] % 0x10000);
     }
 
     private void WaitForKey(uint X) {
@@ -408,11 +408,11 @@ class Processor {
         byte num = Registers[X];
 
         int ones = num % 10;
-        int tens = (num % 100) - ones;
-        int hundreds = num - tens - ones;
+        int tens = (num % 100);
+        int hundreds = num;
 
-        _memory.RAM[I] = (byte) hundreds;
-        _memory.RAM[I+1] = (byte) tens;
+        _memory.RAM[I] = (byte) (hundreds / 100);
+        _memory.RAM[I+1] = (byte) (tens / 10);
         _memory.RAM[I+2] = (byte) ones;
     }
 

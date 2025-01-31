@@ -23,7 +23,7 @@ class Program
         sound.init(Raylib_CSharp.Time.GetFrameTime());
 
         Processor game = new Processor(memory, display, keypad, delay, sound);
-        game.LoadGame("/home/deck/vscodeprojects/Chip8/Chip8/roms/IBM Logo.ch8");
+        game.LoadGame("/home/deck/vscodeprojects/Chip8/Chip8/roms/3-corax+.ch8");
 
         while (!Window.ShouldClose())
         {
@@ -33,7 +33,7 @@ class Program
             delay.Update(Raylib_CSharp.Time.GetFrameTime());
             sound.Update(Raylib_CSharp.Time.GetFrameTime());
 
-            
+
             game.Decode(game.Fetch());
 
             DrawMatrix(game.GetScreenMatrix());
