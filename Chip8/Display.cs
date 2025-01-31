@@ -8,9 +8,6 @@ public class Display
         Array.Clear(Pixels, 0, Pixels.Length);
     }
 
-    
-
-
     public string PixelsToString() {
 
         string result = "";
