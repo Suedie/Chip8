@@ -9,6 +9,8 @@ class Program
 
     public static void Main(string[] args)
     {
+        float accumulatedTime = Raylib_CSharp.Time.GetFrameTime();
+
         Window.Init(1280, 640, "CHIP-8");
 
         IFont font = new Font();
@@ -23,7 +25,7 @@ class Program
         sound.init(Raylib_CSharp.Time.GetFrameTime());
 
         Processor game = new Processor(memory, display, keypad, delay, sound);
-        game.LoadGame("/home/deck/vscodeprojects/Chip8/Chip8/roms/4-flags.ch8");
+        game.LoadGame("../Chip8/roms/5-quirks.ch8");
 
         while (!Window.ShouldClose())
         {
@@ -33,8 +35,12 @@ class Program
             delay.Update(Raylib_CSharp.Time.GetFrameTime());
             sound.Update(Raylib_CSharp.Time.GetFrameTime());
 
+            accumulatedTime += Raylib_CSharp.Time.GetFrameTime();
 
-            game.Decode(game.Fetch());
+            if (accumulatedTime >= (float) 1/60) {
+                game.Decode(game.Fetch());
+                accumulatedTime -= (float) 1/60;
+            }
 
             DrawMatrix(game.GetScreenMatrix());
             
