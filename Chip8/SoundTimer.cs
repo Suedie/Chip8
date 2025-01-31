@@ -14,7 +14,7 @@ class SoundTimer : Timer {
         }
 
         if (Register > 0) {
-            Console.Beep(440, 100);
+            Console.Beep(); //Doesn't work on Linux but at least compiles
         }
     }
 

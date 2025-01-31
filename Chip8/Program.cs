@@ -14,8 +14,15 @@ class Program
         IFont font = new Font();
         Memory memory = new Memory(font);
         Display display = new Display();
+        Keypad keypad = new Keypad();
 
-        Processor game = new Processor(memory, display);
+        DelayTimer delay = new DelayTimer();
+        SoundTimer sound = new SoundTimer();
+
+        delay.init(Raylib_CSharp.Time.GetFrameTime());
+        sound.init(Raylib_CSharp.Time.GetFrameTime());
+
+        Processor game = new Processor(memory, display, keypad, delay, sound);
         game.LoadGame("/home/deck/vscodeprojects/Chip8/Chip8/roms/IBM Logo.ch8");
 
         while (!Window.ShouldClose())
@@ -23,6 +30,10 @@ class Program
             Graphics.BeginDrawing();
             Graphics.ClearBackground(Color.White);
 
+            delay.Update(Raylib_CSharp.Time.GetFrameTime());
+            sound.Update(Raylib_CSharp.Time.GetFrameTime());
+
+            
             game.Decode(game.Fetch());
 
             DrawMatrix(game.GetScreenMatrix());

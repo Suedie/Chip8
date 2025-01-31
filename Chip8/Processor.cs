@@ -13,10 +13,17 @@ class Processor {
 
     private readonly Display _display;
 
-    private Keypad Keypad = new Keypad();
-    public Processor (Memory memory, Display display) {
+    private readonly Keypad _keyboard;
+
+    private readonly DelayTimer _delay;
+
+    private readonly SoundTimer _sound;
+    public Processor (Memory memory, Display display, Keypad keyboard, DelayTimer delay, SoundTimer sound) {
         this._memory = memory;
         this._display = display;
+        this._keyboard = keyboard;
+        this._delay = delay;
+        this._sound = sound;
     }
 
     public void LoadGame(string filepath) {
@@ -148,9 +155,55 @@ class Processor {
             break;
 
             case 0xE:
+                switch (NN) {
+                    case 0x9E:
+                    SkipIfKeyPressed(X);
+                    break;
+
+                    case 0xA1:
+                    SkipIfKeyUp(X);
+                    break;
+                }
             break;
 
             case 0xF:
+                switch (NN) {
+                    case 0x07:
+                    ReadTimer(X);
+                    break;
+
+                    case 0x15:
+                    SetDelayTimer(X);
+                    break;
+
+                    case 0x18:
+                    SetSoundTimer(X);
+                    break;
+
+                    case 0x1E:
+                    AddToIndex(X);
+                    break;
+
+                    case 0x0A:
+                    WaitForKey(X);
+                    break;
+
+                    case 0x29:
+                    GetFontCharacter(X);
+                    break;
+
+                    case 0x33:
+                    BinaryCodedDecimalConversion(X);
+                    break;
+
+                    case 0x55:
+                    StoreRegistersIntoMemory(X);
+                    break;
+
+                    case 0x65:
+                    LoadMemoryIntoRegisters(X);
+                    break;
+                }
             break;
         }
     }
@@ -306,7 +359,7 @@ class Processor {
     private void SkipIfKeyPressed(uint X) {
         byte key = (byte) (Registers[X] & 0x0F);
 
-        if (Input.IsKeyPressed((KeyboardKey) Keypad.HexToKey(key))) {
+        if (Input.IsKeyPressed((KeyboardKey) _keyboard.HexToKey(key))) {
             PC += 2;
         }
     }
@@ -314,9 +367,21 @@ class Processor {
     private void SkipIfKeyUp(uint X) {
         byte key = (byte) (Registers[X] & 0x0F);
 
-        if (Input.IsKeyUp((KeyboardKey) Keypad.HexToKey(key))) {
+        if (Input.IsKeyUp((KeyboardKey) _keyboard.HexToKey(key))) {
             PC += 2;
         }
+    }
+
+    private void ReadTimer(uint X) {
+        Registers[X] = _delay.Register;
+    }
+
+    private void SetDelayTimer(uint X) {
+        _delay.Register = Registers[X];
+    }
+
+    private void SetSoundTimer(uint X) {
+        _sound.Register = Registers[X];
     }
 
     private void AddToIndex(uint X) {
@@ -328,8 +393,8 @@ class Processor {
     }
 
     private void WaitForKey(uint X) {
-        if (Keypad.ContainsKey(Input.GetKeyPressed())) {
-            Registers[X] = Keypad.KeyToHex(Input.GetKeyPressed());
+        if (_keyboard.ContainsKey(Input.GetKeyPressed())) {
+            Registers[X] = _keyboard.KeyToHex(Input.GetKeyPressed());
         } else {
             PC -= PC;
         }
@@ -337,6 +402,30 @@ class Processor {
 
     private void GetFontCharacter(uint X) {
         I = (ushort) (0x50 + ((X & 0x0F) * 0x5));
+    }
+
+    private void BinaryCodedDecimalConversion(uint X) {
+        byte num = Registers[X];
+
+        int ones = num % 10;
+        int tens = (num % 100) - ones;
+        int hundreds = num - tens - ones;
+
+        _memory.RAM[I] = (byte) hundreds;
+        _memory.RAM[I+1] = (byte) tens;
+        _memory.RAM[I+2] = (byte) ones;
+    }
+
+    private void StoreRegistersIntoMemory(uint X) {
+        for (int i = 0; i <= X; i++ ) {
+            _memory.RAM[I+i] = Registers[i];
+        }
+    }
+
+    private void LoadMemoryIntoRegisters(uint X) {
+        for (int i = 0; i <= X; i++ ) {
+            Registers[i] = _memory.RAM[I+i];
+        }
     }
 
 }
