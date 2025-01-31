@@ -1,4 +1,5 @@
 ﻿using Raylib_CSharp.Colors;
+using Raylib_CSharp.Interact;
 using Raylib_CSharp.Rendering;
 using Raylib_CSharp.Windowing;
 
@@ -25,7 +26,7 @@ class Program
         sound.init(Raylib_CSharp.Time.GetFrameTime());
 
         Processor game = new Processor(memory, display, keypad, delay, sound);
-        game.LoadGame("../Chip8/roms/5-quirks.ch8");
+        game.LoadGame("../Chip8/roms/6-keypad.ch8");
 
         while (!Window.ShouldClose())
         {

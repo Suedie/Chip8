@@ -393,7 +393,7 @@ class Processor {
     private void SkipIfKeyPressed(uint X) {
         byte key = (byte) (Registers[X] & 0x0F);
 
-        if (Input.IsKeyPressed((KeyboardKey) _keyboard.HexToKey(key))) {
+        if (Input.IsKeyPressed( (KeyboardKey)_keyboard.HexToKey(key))) {
             PC += 2;
         }
     }
@@ -402,7 +402,7 @@ class Processor {
     private void SkipIfKeyUp(uint X) {
         byte key = (byte) (Registers[X] & 0x0F);
 
-        if (Input.IsKeyUp((KeyboardKey) _keyboard.HexToKey(key))) {
+        if (Input.IsKeyUp( (KeyboardKey) _keyboard.HexToKey(key))) {
             PC += 2;
         }
     }
@@ -433,10 +433,11 @@ class Processor {
 
     //FX0A
     private void WaitForKey(uint X) {
-        if (_keyboard.ContainsKey(Input.GetKeyPressed())) {
-            Registers[X] = _keyboard.KeyToHex(Input.GetKeyPressed());
+        int key = Input.GetKeyPressed();
+        if (_keyboard.ContainsKey(key)) {
+            Registers[X] = _keyboard.KeyToHex(key);
         } else {
-            PC -= PC;
+            PC -= 2;
         }
     }
 
@@ -450,7 +451,7 @@ class Processor {
         byte num = Registers[X];
 
         int ones = num % 10;
-        int tens = (num % 100);
+        int tens = num % 100;
         int hundreds = num;
 
         _memory.RAM[I] = (byte) (hundreds / 100);

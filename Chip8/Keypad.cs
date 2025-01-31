@@ -1,4 +1,5 @@
 using Raylib_CSharp.Interact;
+
 namespace Chip8;
 
 public class Keypad {
