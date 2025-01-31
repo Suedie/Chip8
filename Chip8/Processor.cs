@@ -9,6 +9,8 @@ class Processor {
 
     public byte[] Registers = new byte[0x10];
 
+    private readonly Random _rnd = new Random();
+
     private readonly Memory _memory;
 
     private readonly Display _display;
@@ -36,7 +38,7 @@ class Processor {
 
     public uint Fetch() {
         uint part1 = _memory.RAM[PC];
-        part1 = part1 << 8;       
+        part1 <<= 8;
         uint opcode = part1 + _memory.RAM[PC + 1];
 
         PC += 2;
@@ -356,8 +358,7 @@ class Processor {
 
     //CXNN
     private void RandomNumber(uint X, uint NN) {
-        Random rnd = new Random();
-        int num = rnd.Next(0xFF);
+        int num = _rnd.Next(0xFF);
 
         Registers[X] = (byte) (NN & num);
     }
@@ -374,7 +375,7 @@ class Processor {
             for (int w = 0; w < 8; w++) {
                 int pixel = (spriteRow >> (7 - w)) & 1;
 
-                if (posX + w >= 64 || posY + h >= 32) {
+                if (posX + w > 64 || posY + h > 32) {
                     break;
                 }
 
@@ -439,6 +440,43 @@ class Processor {
             PC -= 2;
         }
     }
+
+    // private void WaitForKey(uint X) {
+    //     if (Input.IsKeyDown(KeyboardKey.One))
+    //         Registers[X] = 0x01;
+    //     else if (Input.IsKeyDown(KeyboardKey.Two))
+    //         Registers[X] = 0x02;
+    //     else if (Input.IsKeyDown(KeyboardKey.Three))
+    //         Registers[X] = 0x03;
+    //     else if (Input.IsKeyDown(KeyboardKey.Four))
+    //         Registers[X] = 0x0C;
+    //     else if (Input.IsKeyDown(KeyboardKey.Q))
+    //         Registers[X] = 0x04;
+    //     else if (Input.IsKeyDown(KeyboardKey.W))
+    //         Registers[X] = 0x05;
+    //     else if (Input.IsKeyDown(KeyboardKey.E))
+    //         Registers[X] = 0x06;
+    //     else if (Input.IsKeyDown(KeyboardKey.R))
+    //         Registers[X] = 0x0D;
+    //     else if (Input.IsKeyDown(KeyboardKey.A))
+    //         Registers[X] = 0x07;
+    //     else if (Input.IsKeyDown(KeyboardKey.S))
+    //         Registers[X] = 0x08;
+    //     else if (Input.IsKeyDown(KeyboardKey.D))
+    //         Registers[X] = 0x09;
+    //     else if (Input.IsKeyDown(KeyboardKey.F))
+    //         Registers[X] = 0x0E;
+    //     else if (Input.IsKeyDown(KeyboardKey.Z))
+    //         Registers[X] = 0x0A;
+    //     else if (Input.IsKeyDown(KeyboardKey.X))
+    //         Registers[X] = 0x00;
+    //     else if (Input.IsKeyDown(KeyboardKey.C))
+    //         Registers[X] = 0x0B;
+    //     else if (Input.IsKeyDown(KeyboardKey.V))
+    //         Registers[X] = 0x0F;
+    //     else
+    //         PC -= 2;
+    // }
 
     //FX29
     private void GetFontCharacter(uint X) {

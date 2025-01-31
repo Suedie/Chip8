@@ -8,10 +8,12 @@ namespace Chip8;
 class Program
 {
 
-    public static void Main(string[] args)
+    public static void Main()
     {
         float accumulatedTime = 0f;
-        float targetFrameTime = 1f/60f;
+        int targetFps = 60;
+        float targetCPUCyclesPerSecond = 1000f;
+        float cyclesPerFrame = targetCPUCyclesPerSecond / (float) targetFps;
 
         Window.Init(1280, 640, "CHIP-8");
 
@@ -23,26 +25,31 @@ class Program
         DelayTimer delay = new DelayTimer();
         SoundTimer sound = new SoundTimer();
 
-        delay.init(Raylib_CSharp.Time.GetFrameTime());
-        sound.init(Raylib_CSharp.Time.GetFrameTime());
+        delay.Init(Raylib_CSharp.Time.GetFrameTime());
+        sound.Init(Raylib_CSharp.Time.GetFrameTime());
 
         Processor game = new Processor(memory, display, keypad, delay, sound);
         game.LoadGame("/home/deck/vscodeprojects/Chip8/Chip8/roms/6-keypad.ch8");
         
-        Raylib_CSharp.Time.SetTargetFPS(60);
+        Raylib_CSharp.Time.SetTargetFPS(targetFps);
 
 
         while (!Window.ShouldClose())
         {
+            Graphics.BeginDrawing();
+            Graphics.ClearBackground(Color.White);
+
             delay.Update(Raylib_CSharp.Time.GetFrameTime());
             sound.Update(Raylib_CSharp.Time.GetFrameTime());
 
             accumulatedTime += Raylib_CSharp.Time.GetFrameTime();
 
-            game.Decode(game.Fetch());
-            
-            Graphics.BeginDrawing();
-            Graphics.ClearBackground(Color.White);
+            while (accumulatedTime >= 1f / targetFps) {
+                for(int i = 0; i < cyclesPerFrame; i++) {
+                    game.Decode(game.Fetch());
+                }
+                accumulatedTime -= 1f / targetFps;
+            }
 
             DrawMatrix(game.GetScreenMatrix());
             

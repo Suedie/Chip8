@@ -7,14 +7,14 @@ public abstract class Timer {
 
     public byte Register = 0xFF;
 
-    public const float Frequency = 1/60;
+    public const float Frequency = 1f/60f;
 
-    public void init(float frameTime) {
+    public void Init(float frameTime) {
         FrameTime = frameTime;
     }
 
-    public void pause() {
-        FrameTime = 0;
+    public void Pause() {
+        FrameTime = 0f;
     }
     
     public abstract void Update(float frameTime);

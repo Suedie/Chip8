@@ -4,7 +4,7 @@ namespace Chip8;
 
 public class Keypad {
 
-    private Dictionary<int, byte> _keyToHex = new Dictionary<int, byte> {
+    private readonly Dictionary<int, byte> _keyToHex = new Dictionary<int, byte> {
         {(int) KeyboardKey.One, 0x1},
         {(int) KeyboardKey.Two, 0x2},
         {(int) KeyboardKey.Three, 0x3},
@@ -23,7 +23,7 @@ public class Keypad {
         {(int) KeyboardKey.V, 0xF}
     };
     
-    private Dictionary<byte, int> _hexToKey = new Dictionary<byte, int> {
+    private readonly Dictionary<byte, int> _hexToKey = new Dictionary<byte, int> {
         {0x1, (int) KeyboardKey.One},
         {0x2, (int) KeyboardKey.Two},
         {0x3, (int) KeyboardKey.Three},
