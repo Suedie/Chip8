@@ -1,5 +1,5 @@
 namespace Chip8;
 
-public class DelayTimer {
+public class DelayTimer : Timer {
     
 }
