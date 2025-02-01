@@ -13,6 +13,4 @@ public class DelayTimer : Timer {
             FrameTime -= Frequency;
         }
     }
-
-
 }

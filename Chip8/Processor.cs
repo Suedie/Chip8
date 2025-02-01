@@ -53,7 +53,7 @@ class Processor {
         uint N = opcode & 0x000F; //fourth nibble
         uint NN = opcode & 0x00FF;
         uint NNN = opcode & 0x0FFF;
-
+        
         switch (firstNibble) {
             case 0x0 when opcode == 0x00E0:
             ClearDisplay();
@@ -64,7 +64,7 @@ class Processor {
             break;
 
             case 0x0:
-            //Unimplemented in modern versions
+            //0NNN unimplemented in modern versions of interpreter
             break;
 
             case 0x1:
@@ -360,13 +360,13 @@ class Processor {
     private void RandomNumber(uint X, uint NN) {
         int num = _rnd.Next(0xFF);
 
-        Registers[X] = (byte) (NN & num);
+        Registers[X] = (byte) (num & NN);
     }
 
     //DXYN
     private void DrawToDisplay(uint X, uint Y, uint N) {
-        int posX = Registers[X] % 65;
-        int posY = Registers[Y] % 33;
+        int posX = Registers[X] % 64;
+        int posY = Registers[Y] % 32;
 
         Registers[0xF] = 0;
 
@@ -375,7 +375,7 @@ class Processor {
             for (int w = 0; w < 8; w++) {
                 int pixel = (spriteRow >> (7 - w)) & 1;
 
-                if (posX + w > 64 || posY + h > 32) {
+                if (posX + w >= 64 || posY + h >= 32) {
                     break;
                 }
 
@@ -424,11 +424,11 @@ class Processor {
 
     //FX1E
     private void AddToIndex(uint X) {
-        if (I + Registers[X] > 0x0FFF) {
+        I += Registers[X];
+
+        if (I > 0x0FFF) {
             Registers[0xF] = 1;
         }
-
-        I += (byte) (Registers[X] % 0x10000);
     }
 
     //FX0A
