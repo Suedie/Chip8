@@ -25,11 +25,8 @@ class Program
         DelayTimer delay = new DelayTimer();
         SoundTimer sound = new SoundTimer();
 
-        delay.Init(Raylib_CSharp.Time.GetFrameTime());
-        sound.Init(Raylib_CSharp.Time.GetFrameTime());
-
         Processor game = new Processor(memory, display, keypad, delay, sound);
-        game.LoadGame("/home/deck/vscodeprojects/Chip8/Chip8/roms/6-keypad.ch8");
+        game.LoadGame("/home/deck/vscodeprojects/Chip8/Chip8/roms/Delay Timer Test [Matthew Mikolay, 2010].ch8");
         
         Raylib_CSharp.Time.SetTargetFPS(targetFps);
 
@@ -39,12 +36,12 @@ class Program
             Graphics.BeginDrawing();
             Graphics.ClearBackground(Color.White);
 
-            delay.Update(Raylib_CSharp.Time.GetFrameTime());
-            sound.Update(Raylib_CSharp.Time.GetFrameTime());
-
             accumulatedTime += Raylib_CSharp.Time.GetFrameTime();
 
             while (accumulatedTime >= 1f / targetFps) {
+            delay.Update(Raylib_CSharp.Time.GetFrameTime());
+            sound.Update(Raylib_CSharp.Time.GetFrameTime());
+
                 for(int i = 0; i < cyclesPerFrame; i++) {
                     game.Decode(game.Fetch());
                 }
