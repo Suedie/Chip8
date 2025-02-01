@@ -376,7 +376,7 @@ class Processor {
             for (int w = 0; w < 8; w++) {
                 int pixel = (spriteRow >> (7 - w)) & 1;
 
-                if (posX + w >= 64 || posY + h >= 32) {
+                if (posX + w > 64 || posY + h > 32) {
                     break;
                 }
 
