@@ -1,4 +1,4 @@
-namespace Chip8;
+namespace Chip8.src;
 
 public class Display
 {

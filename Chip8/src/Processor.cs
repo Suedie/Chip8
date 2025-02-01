@@ -1,6 +1,6 @@
 using Raylib_CSharp.Interact;
 
-namespace Chip8;
+namespace Chip8.src;
 
 class Processor {
     public uint PC = 0x200;

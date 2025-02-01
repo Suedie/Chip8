@@ -1,6 +1,6 @@
 using Raylib_CSharp.Interact;
 
-namespace Chip8;
+namespace Chip8.src;
 
 public class Keypad {
 
