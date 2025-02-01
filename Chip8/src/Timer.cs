@@ -8,10 +8,6 @@ public abstract class Timer {
     public byte Register = 0xFF;
 
     public const float Frequency = 1f/60f;
-
-    public void Pause() {
-        FrameTime = 0f;
-    }
     
     public abstract void Update(float frameTime);
 
