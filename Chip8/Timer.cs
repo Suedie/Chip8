@@ -3,15 +3,11 @@ namespace Chip8;
 
 public abstract class Timer {
 
-    public float FrameTime;
+    public float FrameTime = 0f;
 
     public byte Register = 0xFF;
 
     public const float Frequency = 1f/60f;
-
-    public void Init(float frameTime) {
-        FrameTime = frameTime;
-    }
 
     public void Pause() {
         FrameTime = 0f;
