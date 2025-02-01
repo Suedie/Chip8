@@ -11,40 +11,40 @@ namespace Chip8;
 class Program
 {
 
-    public static bool debugEnabled = true;
-    public static bool isPaused = false;
+    private static bool _debugEnabled = true;
+    private static bool _isPaused = false;
 
-    public static float accumulatedTime = 0f;
-    public static int targetFps = 60;
-    public static float targetCPUCyclesPerSecond = 1000f;
-    public static float cyclesPerFrame = targetCPUCyclesPerSecond / (float) targetFps;
+    private static float _accumulatedTime = 0f;
+    private static int _targetFps = 60;
+    private static float _targetCPUCyclesPerSecond = 1000f;
+    private static float _cyclesPerFrame = _targetCPUCyclesPerSecond / (float) _targetFps;
 
-    public static Memory memory = new Memory(new Font());
-    public static Display display = new Display();
-    public static Keypad keypad = new Keypad();
+    private static Memory _memory = new Memory(new Font());
+    private static Display _display = new Display();
+    private static Keypad _keypad = new Keypad();
 
-    public static DelayTimer delay = new DelayTimer();
-    public static SoundTimer sound = new SoundTimer();
+    private static DelayTimer _delay = new DelayTimer();
+    private static SoundTimer _sound = new SoundTimer();
 
-    public static Processor game = new Processor(memory, display, keypad, delay, sound);
+    private static Processor _game = new Processor(_memory, _display, _keypad, _delay, _sound);
+
+    public static string GamePath;
 
 
     public static void Main()
     {
-        game.LoadGame("/home/deck/vscodeprojects/Chip8/Chip8/roms/5-quirks.ch8");
+        GamePath = "/home/deck/vscodeprojects/Chip8/Chip8/roms/5-quirks.ch8";
+        _game.LoadGame(GamePath);
         
-        Raylib_CSharp.Time.SetTargetFPS(targetFps);
+        Raylib_CSharp.Time.SetTargetFPS(_targetFps);
 
         Window.Init(1280, 640, "CHIP-8");
 
         while (!Window.ShouldClose()) {
-           if (Input.IsKeyPressed(KeyboardKey.L))
-                debugEnabled = !debugEnabled;
-
-            if (!debugEnabled) {
-                EmuLoop(memory, display, keypad, delay, sound, game, accumulatedTime, targetFps, cyclesPerFrame);
-            } else if (debugEnabled) {
-                DebugLoop(memory, display, keypad, delay, sound, game, accumulatedTime, targetFps, cyclesPerFrame);
+            if (!_debugEnabled) {
+                EmuLoop(_memory, _display, _keypad, _delay, _sound, _game, _accumulatedTime, _targetFps, _cyclesPerFrame);
+            } else if (_debugEnabled) {
+                DebugLoop(_memory, _display, _keypad, _delay, _sound, _game, _accumulatedTime, _targetFps, _cyclesPerFrame);
             }
         }
 
@@ -59,14 +59,20 @@ class Program
 
         accumulatedTime += Raylib_CSharp.Time.GetFrameTime();
 
+        //If targetFPS == 60 then update at 60hz
         while (accumulatedTime >= 1f / targetFps) {
             delayTimer.Update(Raylib_CSharp.Time.GetFrameTime());
             soundTimer.Update(Raylib_CSharp.Time.GetFrameTime());
 
+            //CPU runs at 1000 Instructions per second
+            //At 60 FPS that becomes 17 instructions per frame
             for(int i = 0; i < cyclesPerFrame; i++) {
                 game.Decode(game.Fetch());
             }
             accumulatedTime -= 1f / targetFps;
+
+            if (Input.IsKeyPressed(KeyboardKey.Backspace))
+                _debugEnabled = !_debugEnabled;
         }
 
         DrawMatrix(game.GetScreenMatrix());
@@ -84,14 +90,14 @@ class Program
 
         while (accumulatedTime >= 1f / targetFps) {
             DebugControls();
-            if (!isPaused) {
+            if (!_isPaused) {
                 delayTimer.Update(Raylib_CSharp.Time.GetFrameTime());
                 soundTimer.Update(Raylib_CSharp.Time.GetFrameTime());
 
                 for(int i = 0; i < cyclesPerFrame; i++) {
                     game.Decode(game.Fetch());
                 }
-            } else if (isPaused) {
+            } else if (_isPaused) { //Manually step through each opcode and print it
                 if (Input.IsKeyPressed(KeyboardKey.Space)) {
                     delayTimer.Update(Raylib_CSharp.Time.GetFrameTime());
                     soundTimer.Update(Raylib_CSharp.Time.GetFrameTime());
@@ -101,6 +107,9 @@ class Program
                 }
             }
             accumulatedTime -= 1f / targetFps;
+
+            if (Input.IsKeyPressed(KeyboardKey.Backspace))
+                _debugEnabled = !_debugEnabled;
         }
 
         DrawMatrix(game.GetScreenMatrix());
@@ -122,21 +131,22 @@ class Program
         }
     }
 
+    //When debugmode is enabled allows manual control of printing opcodes from Memory
     public static void DebugControls() {
         if (Input.IsKeyPressed(KeyboardKey.P)) {
-            isPaused = !isPaused;
+            _isPaused = !_isPaused;
         }
         if (Input.IsKeyPressed(KeyboardKey.M)) {
-            game.PrintCurrentOpcode();
+            _game.PrintCurrentOpcode();
         }
         if (Input.IsKeyPressed(KeyboardKey.N)) {
-            game.PrintRAM();
+            _game.PrintRAM();
         }
         if (Input.IsKeyPressed(KeyboardKey.B)) {
-            game.PrintFollowingMemory();
+            _game.PrintFollowingMemory();
         }
         if (Input.IsKeyPressed(KeyboardKey.K)) {
-            game.PrintMemorySnippet(16);
+            _game.PrintMemorySnippet(16);
         }
     }
 }
