@@ -11,7 +11,7 @@ namespace Chip8;
 class Program
 {
 
-    private static bool _debugEnabled = true;
+    private static bool _debugEnabled = false;
     private static bool _isPaused = false;
 
     private static float _accumulatedTime = 0f;
@@ -33,7 +33,7 @@ class Program
 
     public static void Main()
     {
-        GamePath = "../Chip8/roms/3-corax+.ch8";
+        GamePath = "../Chip8/roms/5-quirks.ch8";
         _game.LoadGame(GamePath);
         
         Raylib_CSharp.Time.SetTargetFPS(_targetFps);
