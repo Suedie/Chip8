@@ -47,6 +47,7 @@ class Processor {
     }
 
     public void Decode(uint opcode) {
+
         uint firstNibble = (opcode & 0xF000) >> 12;
         uint X = (opcode & 0x0F00) >> 8; //X is the address to Register VX
         uint Y = (opcode & 0x00F0) >> 4; //Y is the address to Register VY
@@ -480,7 +481,7 @@ class Processor {
 
     //FX29
     private void GetFontCharacter(uint X) {
-        I = (ushort) (0x50 + ((X & 0x0F) * 0x5));
+        I = (ushort) (0x50 + ((Registers[X] & 0x0F) * 0x5));
     }
 
     //FX33

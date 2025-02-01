@@ -3,6 +3,8 @@ using Raylib_CSharp.Interact;
 using Raylib_CSharp.Rendering;
 using Raylib_CSharp.Windowing;
 
+using Chip8.src;
+
 namespace Chip8;
 
 class Program
