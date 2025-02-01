@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using Raylib_CSharp.Interact;
 
 namespace Chip8.src;
@@ -34,6 +35,51 @@ class Processor {
 
     public byte[,] GetScreenMatrix() {
         return _display.Pixels;
+    }
+
+    public void PrintCurrentOpcode() {
+        PC -= 2;
+        uint opcode = Fetch();
+        Console.WriteLine("{0:X} {1:X}", PC, opcode);
+    }
+
+    public void PrintFollowingMemory() {
+        for (int i = (int)PC; i < _memory.RAM.Length; i++) {
+            if (i % 2 == 0) {
+                uint part1 = _memory.RAM[i];
+                part1 <<= 8;
+                uint opcode = part1 + _memory.RAM[i];
+
+                Console.WriteLine("{0:X} {1:X}", i, opcode); 
+            }
+        }
+        Console.WriteLine("_________________________________");
+    }
+
+    public void PrintMemorySnippet(int snippetLength) {
+        for (int i = (int)PC; i < (PC + snippetLength); i++) {
+            if (i % 2 == 0) {
+                uint part1 = _memory.RAM[i];
+                part1 <<= 8;
+                uint opcode = part1 + _memory.RAM[i];
+
+                Console.WriteLine("{0:X} {1:X}", i, opcode); 
+            }
+        }
+        Console.WriteLine("_________________________________");
+    }
+
+    public void PrintRAM() {
+        for (int i = 0; i < _memory.RAM.Length; i++) {
+            if (i % 2 == 0) {
+                uint part1 = _memory.RAM[i];
+                part1 <<= 8;
+                uint opcode = part1 + _memory.RAM[i];
+
+                Console.WriteLine("{0:X} {1:X}", i, opcode);
+            }
+        }
+        Console.WriteLine("_________________________________");
     }
 
     public uint Fetch() {

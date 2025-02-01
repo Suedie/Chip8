@@ -14,22 +14,23 @@ class Program
     public static bool debugEnabled = true;
     public static bool isPaused = false;
 
-    
+    public static float accumulatedTime = 0f;
+    public static int targetFps = 60;
+    public static float targetCPUCyclesPerSecond = 1000f;
+    public static float cyclesPerFrame = targetCPUCyclesPerSecond / (float) targetFps;
+
+    public static Memory memory = new Memory(new Font());
+    public static Display display = new Display();
+    public static Keypad keypad = new Keypad();
+
+    public static DelayTimer delay = new DelayTimer();
+    public static SoundTimer sound = new SoundTimer();
+
+    public static Processor game = new Processor(memory, display, keypad, delay, sound);
+
+
     public static void Main()
     {
-        float accumulatedTime = 0f;
-        int targetFps = 60;
-        float targetCPUCyclesPerSecond = 1000f;
-        float cyclesPerFrame = targetCPUCyclesPerSecond / (float) targetFps;
-
-        Memory memory = new Memory(new Font());
-        Display display = new Display();
-        Keypad keypad = new Keypad();
-
-        DelayTimer delay = new DelayTimer();
-        SoundTimer sound = new SoundTimer();
-
-        Processor game = new Processor(memory, display, keypad, delay, sound);
         game.LoadGame("/home/deck/vscodeprojects/Chip8/Chip8/roms/5-quirks.ch8");
         
         Raylib_CSharp.Time.SetTargetFPS(targetFps);
@@ -45,7 +46,6 @@ class Program
             } else if (debugEnabled) {
                 DebugLoop(memory, display, keypad, delay, sound, game, accumulatedTime, targetFps, cyclesPerFrame);
             }
-
         }
 
         Window.Close();
@@ -83,9 +83,7 @@ class Program
         accumulatedTime += Raylib_CSharp.Time.GetFrameTime();
 
         while (accumulatedTime >= 1f / targetFps) {
-            if (Input.IsKeyPressed(KeyboardKey.P)) {
-                isPaused = !isPaused;
-            }
+            DebugControls();
             if (!isPaused) {
                 delayTimer.Update(Raylib_CSharp.Time.GetFrameTime());
                 soundTimer.Update(Raylib_CSharp.Time.GetFrameTime());
@@ -99,6 +97,7 @@ class Program
                     soundTimer.Update(Raylib_CSharp.Time.GetFrameTime());
 
                     game.Decode(game.Fetch());
+                    game.PrintCurrentOpcode();
                 }
             }
             accumulatedTime -= 1f / targetFps;
@@ -123,10 +122,21 @@ class Program
         }
     }
 
-    public static void DebugControls(bool debugEnabled) {
-
-        if (Input.IsKeyDown(KeyboardKey.P)) {
-
+    public static void DebugControls() {
+        if (Input.IsKeyPressed(KeyboardKey.P)) {
+            isPaused = !isPaused;
+        }
+        if (Input.IsKeyPressed(KeyboardKey.M)) {
+            game.PrintCurrentOpcode();
+        }
+        if (Input.IsKeyPressed(KeyboardKey.N)) {
+            game.PrintRAM();
+        }
+        if (Input.IsKeyPressed(KeyboardKey.B)) {
+            game.PrintFollowingMemory();
+        }
+        if (Input.IsKeyPressed(KeyboardKey.K)) {
+            game.PrintMemorySnippet(16);
         }
     }
 }

@@ -36,4 +36,16 @@ public class Memory
         return _stack.Pop();
     }
 
+    public void PrintRAM() {
+        for (int i = 0; i < RAM.Length; i++) {
+            if (i % 2 == 0) {
+                uint part1 = RAM[i];
+                part1 <<= 8;
+                uint opcode = part1 + RAM[i];
+
+                Console.WriteLine("{0:X} {1:X}", i, opcode);
+            }
+        }
+    }
+
 }
