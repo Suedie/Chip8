@@ -2,7 +2,6 @@
 using Raylib_CSharp.Interact;
 using Raylib_CSharp.Rendering;
 using Raylib_CSharp.Windowing;
-using Raylib_CSharp.Audio;
 
 using Chip8.src;
 
@@ -33,7 +32,8 @@ class Program
 
     public static void Main()
     {
-        GamePath = "../Chip8/roms/5-quirks.ch8";
+        Console.WriteLine("Enter a filepath for the ROM:");
+        GamePath = Console.ReadLine();
         _game.LoadGame(GamePath);
         
         Raylib_CSharp.Time.SetTargetFPS(_targetFps);
