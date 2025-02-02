@@ -7,7 +7,7 @@ class SoundTimer : Timer {
 
         if (FrameTime >= Frequency) {
             Register = (byte) (Register - 1);
-            if (Register == 0) {
+            if (Register < 0) {
                 Register = 255;
             }
             FrameTime -= Frequency;
