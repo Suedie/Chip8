@@ -444,6 +444,12 @@ class Processor {
                     break;
                 }
 
+                if (posX+w > _display.Pixels.GetLength(0) - 1) {
+                    break;
+                } else if (posY+h > _display.Pixels.GetLength(1) - 1) {
+                    break;
+                }
+
                 if (pixel == 1 && _display.Pixels[posX+w, posY+h] == 1) {
                     _display.Pixels[posX + w, posY + h] = 0;
                     _registers[0xF] = 1;
