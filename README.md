@@ -1,9 +1,13 @@
 # Chip-8 Emulator/Interpreter
 This is a simple Chip-8 emulator that implements the standard 35 Chip-8 opcodes. It is written entirely in C# and uses the Raylib-Csharp library for graphics and inputs
 
- # Controls
+# Selecting a ROM
 
- Chip-8 originally used a hexadecimal Keypad with keys ranging from 0 to F. This interpreter follows the modern standard of mapping these keys to the left side of the keyboard, using 1-4, Q-R, A-F and Z-V on a QWERTY layout keyboard to match the layout of the hex keypad.
+To select a game to play input the path to the .ch8 file in the console when prompted
+
+# Controls
+
+Chip-8 originally used a hexadecimal Keypad with keys ranging from 0 to F. This interpreter follows the modern standard of mapping these keys to the left side of the keyboard, using 1-4, Q-R, A-F and Z-V on a QWERTY layout keyboard to match the layout of the hex keypad.
 
 1 	2 	3 	C || 1 	2 	3 	4
 
