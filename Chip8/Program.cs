@@ -33,7 +33,7 @@ class Program
 
     public static void Main()
     {
-        GamePath = "../Chip8/roms/Delay Timer Test [Matthew Mikolay, 2010].ch8";
+        GamePath = "../Chip8/roms/5-quirks.ch8";
         _game.LoadGame(GamePath);
         
         Raylib_CSharp.Time.SetTargetFPS(_targetFps);
@@ -125,20 +125,23 @@ class Program
 
     //When debugmode is enabled allows manual control of printing opcodes from Memory
     public static void DebugControls() {
-        if (Input.IsKeyPressed(KeyboardKey.P)) {
+        if (Input.IsKeyPressed(KeyboardKey.P)) { //Pauses
             _isPaused = !_isPaused;
         }
-        if (Input.IsKeyPressed(KeyboardKey.M)) {
+        if (Input.IsKeyPressed(KeyboardKey.M)) { //Prints current opcode being executed
             _game.PrintCurrentOpcode();
         }
-        if (Input.IsKeyPressed(KeyboardKey.N)) {
+        if (Input.IsKeyPressed(KeyboardKey.N)) { //Dumps entire memory in console
             _game.PrintRAM();
         }
-        if (Input.IsKeyPressed(KeyboardKey.B)) {
+        if (Input.IsKeyPressed(KeyboardKey.B)) {  //Dumps entire memory following current location of PC in console
             _game.PrintFollowingMemory();
         }
-        if (Input.IsKeyPressed(KeyboardKey.K)) {
-            _game.PrintMemorySnippet(16);
+        if (Input.IsKeyPressed(KeyboardKey.K)) { //Dumps upcoming 10 locations in memory. Each opcode is 2 bytes so 20 / 2
+            _game.PrintMemorySnippet(20);
+        }
+        if (Input.IsKeyPressed(KeyboardKey.Enter)) { //Reloads game
+            _game.LoadGame(GamePath);
         }
     }
 }

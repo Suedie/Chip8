@@ -30,6 +30,9 @@ class Processor {
 
     public void LoadGame(string filepath) {
         _memory.LoadRom(filepath);
+        PC = 0x200;
+        I = 0;
+        Array.Clear(_registers, 0, _registers.Length);
     }
 
     public byte[,] GetScreenMatrix() {
