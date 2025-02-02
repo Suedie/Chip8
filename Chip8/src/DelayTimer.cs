@@ -1,7 +1,6 @@
 namespace Chip8.src;
 
 public class DelayTimer : Timer {
-
     public override void Update(float frameTime) {
         FrameTime += frameTime;
 

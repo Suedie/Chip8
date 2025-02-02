@@ -36,6 +36,11 @@ class Processor {
         return _display.Pixels;
     }
 
+    public void updateTimers(float frameTime) {
+        _delay.Update(frameTime);
+        _sound.Update(frameTime);
+    }
+
     //Debug
     public void PrintCurrentOpcode() {
         uint part1 = _memory.RAM[PC-2];

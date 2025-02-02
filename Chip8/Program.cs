@@ -33,7 +33,7 @@ class Program
 
     public static void Main()
     {
-        GamePath = "../Chip8/roms/5-quirks.ch8";
+        GamePath = "../Chip8/roms/Delay Timer Test [Matthew Mikolay, 2010].ch8";
         _game.LoadGame(GamePath);
         
         Raylib_CSharp.Time.SetTargetFPS(_targetFps);
@@ -60,9 +60,6 @@ class Program
 
         //If targetFPS == 60 then update at 60hz
         while (_accumulatedTime >= 1f / _targetFps) {
-            _delay.Update(Raylib_CSharp.Time.GetFrameTime());
-            _sound.Update(Raylib_CSharp.Time.GetFrameTime());
-
             //CPU runs at 1000 Instructions per second
             //At 60 FPS that becomes 17 instructions per frame
             for(int i = 0; i < _cyclesPerFrame; i++) {
@@ -73,6 +70,7 @@ class Program
             if (Input.IsKeyPressed(KeyboardKey.Backspace))
                 _debugEnabled = !_debugEnabled;
         }
+        _game.updateTimers(Raylib_CSharp.Time.GetFrameTime());
 
         DrawMatrix(_game.GetScreenMatrix());
                 
@@ -89,17 +87,11 @@ class Program
         while (_accumulatedTime >= 1f / _targetFps) {
             DebugControls();
             if (!_isPaused) {
-                _delay.Update(Raylib_CSharp.Time.GetFrameTime());
-                _sound.Update(Raylib_CSharp.Time.GetFrameTime());
-
                 for(int i = 0; i < _cyclesPerFrame; i++) {
                     _game.Decode(_game.Fetch());
                 }
             } else if (_isPaused) { //Manually step through each opcode and print it
                 if (Input.IsKeyPressed(KeyboardKey.Space)) {
-                    _delay.Update(Raylib_CSharp.Time.GetFrameTime());
-                    _sound.Update(Raylib_CSharp.Time.GetFrameTime());
-
                     _game.Decode(_game.Fetch());
                     _game.PrintCurrentOpcode();
                 }
@@ -110,10 +102,12 @@ class Program
                 _debugEnabled = !_debugEnabled;
         }
 
+        _game.updateTimers(Raylib_CSharp.Time.GetFrameTime());
+
         DrawMatrix(_game.GetScreenMatrix());
                 
         Graphics.EndDrawing();
-     }
+    }
 
     private static void DrawMatrix(byte[,] pixels) {
 
