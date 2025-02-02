@@ -43,18 +43,18 @@ class Processor {
 
     //Debug
     public void PrintCurrentOpcode() {
-        uint part1 = _memory.RAM[PC-2];
+        uint part1 = _memory.RAM[PC];
         part1 <<= 8;
-        uint opcode = part1 + _memory.RAM[PC - 1];
+        uint opcode = part1 + _memory.RAM[PC + 1];
 
-        Console.WriteLine("{0:X} {1:X}", PC - 2, opcode);
+        Console.WriteLine("{0:X} {1:X}", PC, opcode);
     }
 
     //Debug
     //Prints all opcodes stored in memory following the current location
     public void PrintFollowingMemory() {
         Console.WriteLine("_________________________________");
-        for (int i = (int)PC - 2; i < _memory.RAM.Length; i++) {
+        for (int i = (int)PC; i < _memory.RAM.Length; i++) {
             if (i % 2 == 0) {
                 uint part1 = _memory.RAM[i];
                 part1 <<= 8;
@@ -70,7 +70,7 @@ class Processor {
     //Prints all opcodes in memory following the current location up to a point specified by user
     public void PrintMemorySnippet(int snippetLength) {
         Console.WriteLine("_________________________________");
-        for (int i = (int)PC - 2; i < (PC - 2 + snippetLength); i++) {
+        for (int i = (int)PC; i < (PC + snippetLength); i++) {
             if (i % 2 == 0) {
                 uint part1 = _memory.RAM[i];
                 part1 <<= 8;
