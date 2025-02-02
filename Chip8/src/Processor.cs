@@ -340,16 +340,19 @@ class Processor {
     //8XY1
     private void BinaryOR(uint X, uint Y) {
         _registers[X] = (byte) (_registers[X] | _registers[Y]);
+        //_registers[0xF] = 0; //Cosmac reset quirk
     }
 
     //8XY2
     private void BinaryAND(uint X, uint Y) {
         _registers[X] = (byte) (_registers[X] & _registers[Y]);
+        //_registers[0xF] = 0; //Cosmac reset quirk
     }
 
     //8XY3
     private void LogicalXOR(uint X, uint Y) {
         _registers[X] = (byte) (_registers[X] ^ _registers[Y]);
+        //_registers[0xF] = 0; //Cosmac reset quirk
     }
 
     //8XY4
