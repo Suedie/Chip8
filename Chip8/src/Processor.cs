@@ -39,9 +39,9 @@ class Processor {
         return _display.Pixels;
     }
 
-    public void updateTimers(float frameTime) {
-        _delay.Update(frameTime);
-        _sound.Update(frameTime);
+    public void updateTimers() {
+        _delay.Update();
+        _sound.Update();
     }
 
     //Debug
@@ -508,13 +508,24 @@ class Processor {
         }
     }
 
+    private int _keyLastPressed = -1;
     //FX0A
     private void WaitForKey(uint X) {
-        int key = Input.GetKeyPressed();
-        if (_keyboard.ContainsKey(key)) {
-            _registers[X] = _keyboard.KeyToHex(key);
-        } else {
+        if (_keyLastPressed < 0) {
+            int key = Input.GetKeyPressed();
+            if (_keyboard.ContainsKey(key)) {
+                _keyLastPressed = key;
+                PC -= 2;
+            } else {
             PC -= 2;
+            }
+        } else {
+            if (Input.IsKeyReleased((KeyboardKey) _keyLastPressed)) {
+                _registers[X] = _keyboard.KeyToHex((int) _keyLastPressed);
+                _keyLastPressed = -1;
+            } else {
+                PC -= 2;
+            }
         }
     }
 

@@ -15,7 +15,12 @@ class Program
 
     private static float _accumulatedTime = 0f;
     private static int _targetFps = 60;
-    private static float _targetCPUCyclesPerSecond = 1000f;
+
+    //Set between 500-1000
+    //Higher results in smoother controls
+    //Lower gives smoother gameplay
+    //600-700 is a good middle ground
+    private static float _targetCPUCyclesPerSecond = 700f;
     private static float _cyclesPerFrame = _targetCPUCyclesPerSecond / (float) _targetFps;
 
     private static Memory _memory = new Memory(new Font());
@@ -60,8 +65,9 @@ class Program
 
         //If targetFPS == 60 then update at 60hz
         while (_accumulatedTime >= 1f / _targetFps) {
-            //CPU runs at 1000 Instructions per second
-            //At 60 FPS that becomes 17 instructions per frame
+            _game.updateTimers();
+            //CPU runs multiple instructions per frame (ipf)
+            //if target is 1000 hz then at 60 fps that becomes 17 ipf
             for(int i = 0; i < _cyclesPerFrame; i++) {
                 _game.Decode(_game.Fetch());
             }
@@ -70,7 +76,6 @@ class Program
             if (Input.IsKeyPressed(KeyboardKey.Backspace))
                 _debugEnabled = !_debugEnabled;
         }
-        _game.updateTimers(Raylib_CSharp.Time.GetFrameTime());
 
         DrawMatrix(_game.GetScreenMatrix());
                 
@@ -85,6 +90,7 @@ class Program
         _accumulatedTime += Raylib_CSharp.Time.GetFrameTime();
 
         while (_accumulatedTime >= 1f / _targetFps) {
+            _game.updateTimers();
             DebugControls();
             if (!_isPaused) {
                 for(int i = 0; i < _cyclesPerFrame; i++) {
@@ -101,8 +107,6 @@ class Program
             if (Input.IsKeyPressed(KeyboardKey.Backspace))
                 _debugEnabled = !_debugEnabled;
         }
-
-        _game.updateTimers(Raylib_CSharp.Time.GetFrameTime());
 
         DrawMatrix(_game.GetScreenMatrix());
                 
