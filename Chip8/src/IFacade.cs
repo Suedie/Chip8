@@ -1,5 +1,8 @@
 namespace  Chip8.src;
 
 interface IFacade {
-    void run();
+
+    void LoadGame(string filepath);
+    void Update();
+    byte[,] GetScreenMatrix();
 }
