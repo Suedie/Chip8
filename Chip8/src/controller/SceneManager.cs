@@ -2,13 +2,13 @@ namespace Chip8.src.controller;
 
 class SceneManager {
 
-    private Screen _currentScreen = Screen.GameplayScreen;
+    private SceneIdentifier _currentScreen = SceneIdentifier.GameplayScreen;
 
     private IFacade _model;
 
     private GameplayScene _gameplayScene;
 
-    public void LoadRom(string filepath) {
+    public void LoadGame(string filepath) {
         _model.LoadGame(filepath);
     }
 
@@ -20,22 +20,22 @@ class SceneManager {
     
     public void Run() {
         switch (_currentScreen) {
-            case Screen.MainMenu:
+            case SceneIdentifier.MainMenu:
             break;
 
-            case Screen.OptionsMenu:
+            case SceneIdentifier.OptionsMenu:
             break;
 
-            case Screen.PauseMenu:
+            case SceneIdentifier.PauseMenu:
             break;
 
-            case Screen.GameplayScreen:
+            case SceneIdentifier.GameplayScreen:
             _gameplayScene.Update();
             break;
         }
     }
 
-    public void SwitchToScene(Screen scene) {
+    public void SwitchToScene(SceneIdentifier scene) {
         _currentScreen = scene;
     }
 }

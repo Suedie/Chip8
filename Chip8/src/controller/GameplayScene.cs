@@ -9,9 +9,11 @@ class GameplayScene : IScene{
         this.model = model;
     }
 
-    public void Update() {
+    public SceneIdentifier Update() {
         model.Update();
         DrawMatrix(model.GetScreenMatrix());
+
+        return SceneIdentifier.GameplayScreen;
     }
 
     private static void DrawMatrix(byte[,] pixels) {

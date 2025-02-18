@@ -24,7 +24,7 @@ class Program
         Console.WriteLine("Enter a filepath for the ROM:");
         GamePath = Console.ReadLine();
 
-        sceneManager.LoadRom(GamePath);
+        sceneManager.LoadGame(GamePath);
         
         Raylib_CSharp.Time.SetTargetFPS(targetFPS);
 

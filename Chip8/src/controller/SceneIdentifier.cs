@@ -1,6 +1,6 @@
 namespace Chip8.src.controller;
 
-enum Screen {
+enum SceneIdentifier {
     MainMenu,
     PauseMenu,
     OptionsMenu,
