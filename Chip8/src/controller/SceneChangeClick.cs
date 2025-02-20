@@ -4,9 +4,11 @@ namespace Chip8.src.controller;
 
 class SceneChangeClick : IClickable {
 
+    public string Label{get;}
     private SceneIdentifier _nextScene;
 
-    public SceneChangeClick(SceneIdentifier nextScene) {
+    public SceneChangeClick(string label, SceneIdentifier nextScene) {
+        Label = label;
         _nextScene = nextScene;
     }
 

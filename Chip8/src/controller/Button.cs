@@ -13,13 +13,13 @@ class Button {
     private string _label;
     private IClickable _clickBehaviour;
 
-    public Button (int x, int y, int width, int height, string label, IClickable clickBehaviour) {
-        this.PosX = x;
-        this.PosY = y;
-        this._width = width;
-        this._height = height;
-        this._label = label;
-        this._clickBehaviour = clickBehaviour;
+    public Button (int x, int y, int width, int height, IClickable clickBehaviour) {
+        PosX = x;
+        PosY = y;
+        _width = width;
+        _height = height;
+        _clickBehaviour = clickBehaviour;
+        _label = _clickBehaviour.Label;
     }
 
     public void DrawButton() {

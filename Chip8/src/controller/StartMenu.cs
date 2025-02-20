@@ -8,11 +8,11 @@ class StartMenu : AbstractMenu {
     }
 
     public override Button[] CreateButtons() {
-        NextScene = SceneIdentifier.StartMenu;
+        ThisScene = SceneIdentifier.StartMenu;
         Buttons = new Button[3];
-        Buttons[0] = new Button((Program.WindowWidth / 2) - (ButtonWidth / 2), 0, ButtonWidth, ButtonHeight, "Load Game", new SceneChangeClick(SceneIdentifier.GameScreen));
-        Buttons[1] = new Button((Program.WindowWidth / 2) - (ButtonWidth / 2), 0, ButtonWidth, ButtonHeight, "Options", new SceneChangeClick(SceneIdentifier.OptionsMenu));
-        Buttons[2] = new Button((Program.WindowWidth / 2) - (ButtonWidth / 2), 0, ButtonWidth, ButtonHeight, "Exit", new ExitClick());
+        Buttons[0] = new Button((Program.WindowWidth / 2) - (ButtonWidth / 2), 0, ButtonWidth, ButtonHeight, new SceneChangeClick("Load Game", SceneIdentifier.GameScreen));
+        Buttons[1] = new Button((Program.WindowWidth / 2) - (ButtonWidth / 2), 0, ButtonWidth, ButtonHeight, new SceneChangeClick("Options", SceneIdentifier.OptionsMenu));
+        Buttons[2] = new Button((Program.WindowWidth / 2) - (ButtonWidth / 2), 0, ButtonWidth, ButtonHeight, new ExitClick("Exit to desktop"));
         AlignButtons();
 
         return Buttons;

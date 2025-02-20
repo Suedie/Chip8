@@ -8,12 +8,12 @@ class PauseMenu : AbstractMenu {
     }
 
     public override Button[] CreateButtons() {
-        NextScene = SceneIdentifier.PauseMenu;
+        ThisScene = SceneIdentifier.PauseMenu;
         Buttons = new Button[4];
-        Buttons[0] = new Button((Program.WindowWidth / 2) - (ButtonWidth / 2), 0, ButtonWidth, ButtonHeight, "Resume", new SceneChangeClick(SceneIdentifier.GameScreen));
-        Buttons[1] = new Button((Program.WindowWidth / 2) - (ButtonWidth / 2), 0, ButtonWidth, ButtonHeight, "Options", new SceneChangeClick(SceneIdentifier.OptionsMenu));
-        Buttons[2] = new Button((Program.WindowWidth / 2) - (ButtonWidth / 2), 0, ButtonWidth, ButtonHeight, "Exit to main menu", new SceneChangeClick(SceneIdentifier.StartMenu));
-        Buttons[3] = new Button((Program.WindowWidth / 2) - (ButtonWidth / 2), 0, ButtonWidth, ButtonHeight, "Exit to desktop", new ExitClick());
+        Buttons[0] = new Button((Program.WindowWidth / 2) - (ButtonWidth / 2), 0, ButtonWidth, ButtonHeight, new SceneChangeClick("Resume", SceneIdentifier.GameScreen));
+        Buttons[1] = new Button((Program.WindowWidth / 2) - (ButtonWidth / 2), 0, ButtonWidth, ButtonHeight, new SceneChangeClick("Options", SceneIdentifier.OptionsMenu));
+        Buttons[2] = new Button((Program.WindowWidth / 2) - (ButtonWidth / 2), 0, ButtonWidth, ButtonHeight, new SceneChangeClick("Exit to main menu", SceneIdentifier.StartMenu));
+        Buttons[3] = new Button((Program.WindowWidth / 2) - (ButtonWidth / 2), 0, ButtonWidth, ButtonHeight, new ExitClick("Exit to desktop"));
         AlignButtons();
 
         return Buttons;
