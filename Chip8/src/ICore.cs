@@ -1,6 +1,6 @@
 namespace  Chip8.src;
 
-interface IFacade {
+interface ICore {
 
     void LoadGame(string filepath);
     void Update();

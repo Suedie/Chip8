@@ -29,7 +29,7 @@ class Program
 
         Input.SetExitKey(KeyboardKey.Null);
 
-        IFacade core = new Chip8Core(targetFPS);
+        ICore core = new Chip8Core(targetFPS);
         SceneManager sceneManager = new SceneManager(core);
         sceneManager.LoadGame(GamePath);
 
@@ -46,14 +46,5 @@ class Program
             Graphics.EndDrawing();
         }
         Window.Close();
-    }
-
-    public static void ResizeWindow(int width, int height) {
-        if (width <= Window.GetMonitorWidth(Window.GetCurrentMonitor()) || height <= Window.GetMonitorHeight(Window.GetCurrentMonitor())) {
-            WindowWidth = width;
-            WindowHeight = height;
-
-            Window.SetSize(WindowWidth, WindowHeight);
-        }
     }
 }

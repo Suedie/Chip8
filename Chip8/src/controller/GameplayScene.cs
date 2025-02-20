@@ -5,9 +5,9 @@ using Raylib_CSharp.Rendering;
 namespace Chip8.src.controller;
 
 class GameplayScene : IScene{
-    private IFacade _emuCore;
+    private ICore _emuCore;
     public SceneIdentifier ThisScene{get;} = SceneIdentifier.GameScreen;
-    public GameplayScene(IFacade emuCore) {
+    public GameplayScene(ICore emuCore) {
         _emuCore = emuCore;
     }
 

@@ -2,7 +2,7 @@ using Raylib_CSharp.Interact;
 
 namespace Chip8.src;
 
-class Chip8Core : IFacade {
+class Chip8Core : ICore {
 
     public Processor Processor{get;}
     public int TargetFPS{set;get;}

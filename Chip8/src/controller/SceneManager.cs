@@ -5,7 +5,7 @@ class SceneManager {
     private SceneIdentifier _previousScene;
     private SceneIdentifier _currentScene;
 
-    private IFacade _emuCore;
+    private ICore _emuCore;
 
     private IScene _gameScene;
     private IScene _startMenu;
@@ -16,7 +16,7 @@ class SceneManager {
         _emuCore.LoadGame(filepath);
     }
 
-    public SceneManager(IFacade model) {
+    public SceneManager(ICore model) {
         _currentScene = SceneIdentifier.StartMenu;
         _emuCore = model;
         _gameScene = new GameplayScene(_emuCore);
