@@ -14,7 +14,7 @@ class OptionsMenu : AbstractMenu {
         Buttons[0] = new Button(0, 0, ButtonWidth, ButtonHeight, new FullscreenSwitchClick());
         Buttons[1] = new Button(0, 0, ButtonWidth, ButtonHeight, new ResolutionChangeClick());
         Buttons[2] = new Button(0, 0, ButtonWidth, ButtonHeight, new SceneChangeClick("Back", PreviousScene));
-        AlignButtonsVertically();
+        AlignButtons();
 
         return Buttons;
     }

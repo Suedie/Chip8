@@ -12,7 +12,7 @@ class PauseMenu : AbstractMenu {
         Buttons[1] = new Button(0, 0, ButtonWidth, ButtonHeight, new SceneChangeClick("Options", SceneIdentifier.OptionsMenu));
         Buttons[2] = new Button(0, 0, ButtonWidth, ButtonHeight, new SceneChangeClick("Exit to main menu", SceneIdentifier.StartMenu));
         Buttons[3] = new Button(0, 0, ButtonWidth, ButtonHeight, new ExitClick("Exit to desktop"));
-        AlignButtonsVertically();
+        AlignButtons();
 
         return Buttons;
     }

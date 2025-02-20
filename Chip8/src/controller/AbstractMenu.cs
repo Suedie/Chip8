@@ -19,6 +19,7 @@ abstract class AbstractMenu : IScene {
     }
 
     public SceneIdentifier Update() {
+        AlignButtons();
         Draw();
         if (Input.IsMouseButtonPressed(MouseButton.Left)) {
             foreach (Button button in Buttons) {
@@ -37,7 +38,7 @@ abstract class AbstractMenu : IScene {
 
     abstract public SceneIdentifier Back();
 
-    public void AlignButtonsVertically() {
+    public virtual void AlignButtons() {
         int buttonX = (Program.WindowWidth / 2) - (ButtonWidth / 2);
         int firstButtonY = (Program.WindowHeight / 2) - (((Buttons.Length * ButtonHeight) + ((Buttons.Length-1) * Spacing)) / 2);
 

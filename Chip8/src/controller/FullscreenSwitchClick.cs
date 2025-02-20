@@ -4,9 +4,12 @@ namespace Chip8.src.controller;
 
 class FullscreenSwitchClick : IClickable {
 
-    public string Label{get; set;}
-
-    private bool isBorderless;
+    private string _label;
+    public string Label
+    {
+        get { GetCurrentWindowMode(); return _label; }
+        set => _label = value;
+    }
 
     public FullscreenSwitchClick() {
         GetCurrentWindowMode();
@@ -23,28 +26,21 @@ class FullscreenSwitchClick : IClickable {
         if (Window.IsFullscreen()) {
             Window.ToggleFullscreen();
             Label = "Windowed";
-            isBorderless = false;
-        } else if (!isBorderless) {
-            Window.ToggleBorderless();
-            Label = "Borderless Fullscreen";
-            isBorderless = true;
+            Window.SetSize(Program.WindowWidth, Program.WindowHeight);
         } else {
-            Window.ToggleFullscreen();
             Label = "Fullscreen";
-            isBorderless = false;
+            Program.WindowWidth = Window.GetMonitorWidth(Window.GetCurrentMonitor());
+            Program.WindowHeight = Window.GetMonitorHeight(Window.GetCurrentMonitor());
+            Window.SetSize(Window.GetMonitorWidth(Window.GetCurrentMonitor()), Window.GetMonitorHeight(Window.GetCurrentMonitor()));
+            Window.ToggleFullscreen();
         }
     }
 
     private void GetCurrentWindowMode() {
         if (Window.IsFullscreen()) {
             Label = "Fullscreen";
-            isBorderless = false;
-        } else if (!isBorderless) {
-            Label = "Windowed";
-            isBorderless = false;
         } else {
-            Label = "Borderless Fullscreen";
-            isBorderless = true;
+            Label = "Windowed";
         }
     }
     
