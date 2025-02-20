@@ -1,0 +1,28 @@
+using Raylib_CSharp.Interact;
+
+namespace Chip8.src.controller;
+
+class OptionsMenu : AbstractMenu {
+
+    public SceneIdentifier PreviousScene;
+
+    public OptionsMenu(SceneIdentifier previousScene) {
+        PreviousScene = previousScene;
+    }
+
+    public override Button[] CreateButtons() {
+        ThisScene = SceneIdentifier.OptionsMenu;
+        Buttons = new Button[3];
+        Buttons[0] = new Button(0, 0, ButtonWidth, ButtonHeight, new FullscreenSwitchClick());
+        Buttons[1] = new Button(0, 0, ButtonWidth, ButtonHeight, new ResolutionChangeClick());
+        Buttons[2] = new Button(0, 0, ButtonWidth, ButtonHeight, new SceneChangeClick("Back", PreviousScene));
+        AlignButtonsVertically();
+
+        return Buttons;
+    }
+
+    public override SceneIdentifier Back() {
+        return PreviousScene;
+    }
+
+}
