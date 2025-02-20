@@ -5,15 +5,15 @@ using Raylib_CSharp.Rendering;
 namespace Chip8.src.controller;
 
 class GameplayScene : IScene{
-    private IFacade model;
+    private IFacade _emuCore;
     public SceneIdentifier ThisScene{get;} = SceneIdentifier.GameScreen;
-    public GameplayScene(IFacade model) {
-        this.model = model;
+    public GameplayScene(IFacade emuCore) {
+        _emuCore = emuCore;
     }
 
     public SceneIdentifier Update() {
-        model.Update();
-        DrawMatrix(model.GetScreenMatrix());
+        _emuCore.Update();
+        DrawMatrix(_emuCore.GetScreenMatrix());
 
         if (Input.IsKeyPressed(KeyboardKey.Escape)) {
             return Back();
@@ -26,12 +26,15 @@ class GameplayScene : IScene{
         return SceneIdentifier.PauseMenu;
     }
 
-    private static void DrawMatrix(byte[,] pixels) {
+    private void DrawMatrix(byte[,] pixels) {
+        int scale = Program.WindowWidth / 64;
+        int xOffset = (Program.WindowWidth - (64 * scale)) / 2;
+        int yOffset = (Program.WindowHeight - (32 * scale)) / 2;
 
-        for (int i = 0; i < pixels.GetLength(0); i++) {
-            for (int j = 0; j < pixels.GetLength(1); j++) {
-                if(pixels[i, j] == 1) {
-                    Graphics.DrawRectangle(i*20, j*20, 20, 20, Color.RayWhite);
+        for (int pixelRow = 0; pixelRow < pixels.GetLength(0); pixelRow++) {
+            for (int pixelColumn = 0; pixelColumn < pixels.GetLength(1); pixelColumn++) {
+                if(pixels[pixelRow, pixelColumn] == 1) {
+                    Graphics.DrawRectangle((pixelRow*scale) + xOffset, (pixelColumn*scale) + yOffset, scale, scale, Color.RayWhite);
                 }
             }
         }
