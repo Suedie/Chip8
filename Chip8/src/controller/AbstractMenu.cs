@@ -37,12 +37,14 @@ abstract class AbstractMenu : IScene {
 
     abstract public SceneIdentifier Back();
 
-    public void AlignButtons() {
-        int firstButtonX = (Program.WindowHeight / 2) - (((Buttons.Length * ButtonHeight) + ((Buttons.Length-1) * Spacing)) / 2);
+    public void AlignButtonsVertically() {
+        int buttonX = (Program.WindowWidth / 2) - (ButtonWidth / 2);
+        int firstButtonY = (Program.WindowHeight / 2) - (((Buttons.Length * ButtonHeight) + ((Buttons.Length-1) * Spacing)) / 2);
 
         for (int i = 0; i < Buttons.Length; i++) {
             if (Buttons[i] != null) {
-                Buttons[i].PosY = (Spacing * i) + (i * ButtonHeight) + firstButtonX;
+                Buttons[i].PosX = buttonX;
+                Buttons[i].PosY = (Spacing * i) + (i * ButtonHeight) + firstButtonY;
             }
         }
     }

@@ -29,7 +29,8 @@ class Button {
             color = Color.Gray;
         }
         Graphics.DrawRectangle(PosX, PosY, _width, _height, color);
-        Graphics.DrawText(_label,PosX + (_width / 10), PosY + (_height / 2), _height / 2, Color.Black);
+        _label = _clickBehaviour.Label;
+        Graphics.DrawText(_label,PosX + (_width / 10), PosY + (_height / 2), _height / 3, Color.Black);
     }
 
     private bool mouseOverlaps(int mouseX, int mouseY) {
