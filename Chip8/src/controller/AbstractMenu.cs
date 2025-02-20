@@ -9,7 +9,7 @@ abstract class AbstractMenu : IScene {
     public int ButtonWidth{get;}
     public int ButtonHeight{get;}
     public int Spacing{get;}
-    public SceneIdentifier NextScene{get;set;}
+    public SceneIdentifier ThisScene{get; set;}
 
     public AbstractMenu() {
         ButtonWidth = Program.WindowWidth / 4;
@@ -22,15 +22,15 @@ abstract class AbstractMenu : IScene {
         Draw();
         if (Input.IsMouseButtonPressed(MouseButton.Left)) {
             foreach (Button button in Buttons) {
-                SceneIdentifier switchScene = button.OnClick(Input.GetMouseX(), Input.GetMouseY(), NextScene);
-                if (switchScene != NextScene) {
-                    return switchScene;
+                SceneIdentifier nextScene = button.OnClick(Input.GetMouseX(), Input.GetMouseY(), ThisScene);
+                if (nextScene != ThisScene) {
+                    return nextScene;
                 }
             }
         } else if (Input.IsKeyPressed(KeyboardKey.Escape)) {
             return Back();
         }
-        return NextScene;
+        return ThisScene;
     }
 
     abstract public Button[] CreateButtons();

@@ -4,4 +4,6 @@ interface IScene {
     SceneIdentifier Update();
 
     SceneIdentifier Back();
+
+    SceneIdentifier ThisScene{get;}
 }

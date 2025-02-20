@@ -6,6 +6,7 @@ namespace Chip8.src.controller;
 
 class GameplayScene : IScene{
     private IFacade model;
+    public SceneIdentifier ThisScene{get;} = SceneIdentifier.GameScreen;
     public GameplayScene(IFacade model) {
         this.model = model;
     }
@@ -18,7 +19,7 @@ class GameplayScene : IScene{
             return Back();
         }
 
-        return SceneIdentifier.GameScreen;
+        return ThisScene;
     }
 
     public SceneIdentifier Back() {

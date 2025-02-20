@@ -6,9 +6,9 @@ class SceneManager {
 
     private IFacade _model;
 
-    private GameplayScene _gameScene;
-    private StartMenu _startMenu;
-    private PauseMenu _pauseMenu;
+    private IScene _gameScene;
+    private IScene _startMenu;
+    private IScene _pauseMenu;
 
     public void LoadGame(string filepath) {
         _model.LoadGame(filepath);
