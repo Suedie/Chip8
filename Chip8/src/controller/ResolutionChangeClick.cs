@@ -6,7 +6,7 @@ class ResolutionChangeClick : IClickable {
 
     private string _label;
     public string Label {
-        get {setLabel(); return _label;} set => _label = value;}
+        get {SetLabel(); return _label;} set => _label = value;}
     private int _index = 0;
     private (int, int)[] resolutions;
 
@@ -30,21 +30,21 @@ class ResolutionChangeClick : IClickable {
         _index++;
 
         ResizeWindow(width, height);
-        setLabel();
+        SetLabel();
     }
 
     private void init() {
-        setList();
+        SetList();
         for (int i = 0; i < resolutions.Length; i++) {
             if (Program.WindowWidth == resolutions[i].Item1 && Program.WindowHeight == resolutions[i].Item2) {
                 _index = i;
                 break;
             }
         }
-        setLabel();
+        SetLabel();
     }
 
-    private void setLabel() {
+    private void SetLabel() {
         Label = Program.WindowWidth + " x " + Program.WindowHeight;
     }
 
@@ -54,10 +54,11 @@ class ResolutionChangeClick : IClickable {
             Program.WindowHeight = height;
 
             Window.SetSize(Program.WindowWidth, Program.WindowHeight);
+            Window.SetPosition((Window.GetMonitorWidth(Window.GetCurrentMonitor()) / 2) - (width / 2), (Window.GetMonitorHeight(Window.GetCurrentMonitor()) / 2) - (height / 2));
         }
     }
 
-    private void setList() {
+    private void SetList() {
         resolutions = new (int, int)[]
         {
             (640, 480),
