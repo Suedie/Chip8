@@ -1,4 +1,5 @@
 using Raylib_CSharp.Colors;
+using Raylib_CSharp.Interact;
 using Raylib_CSharp.Rendering;
 
 namespace Chip8.src.controller;
@@ -13,7 +14,15 @@ class GameplayScene : IScene{
         model.Update();
         DrawMatrix(model.GetScreenMatrix());
 
-        return SceneIdentifier.GameplayScreen;
+        if (Input.IsKeyPressed(KeyboardKey.Escape)) {
+            return Back();
+        }
+
+        return SceneIdentifier.GameScreen;
+    }
+
+    public SceneIdentifier Back() {
+        return SceneIdentifier.PauseMenu;
     }
 
     private static void DrawMatrix(byte[,] pixels) {
