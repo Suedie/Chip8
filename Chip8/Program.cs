@@ -10,6 +10,8 @@ namespace Chip8;
 
 class Program
 {
+    public static int WindowWidth{get;set;} = 800;
+    public static int WindowHeight{get;set;} = 400;
     public static float accumulatedTime = 0f;
     public static string? GamePath;
 
@@ -18,30 +20,40 @@ class Program
     {
         int targetFPS = 60;
 
-        IFacade core = new Chip8Core(targetFPS);
-        SceneManager sceneManager = new SceneManager(core);
-
-        Console.WriteLine("Enter a filepath for the ROM:");
-        GamePath = Console.ReadLine();
-
-        sceneManager.LoadGame(GamePath);
+        GamePath = "/home/deck/vscodeprojects/Chip8/Chip8/roms/IBM Logo.ch8";
         
         Raylib_CSharp.Time.SetTargetFPS(targetFPS);
 
-        Window.Init(1280, 640, "CHIP-8");
+        Window.Init(WindowWidth, WindowHeight, "CHIP-8");
+        Window.SetMaxSize(Window.GetMonitorWidth(Window.GetCurrentMonitor()), Window.GetMonitorHeight(Window.GetCurrentMonitor()));
+
+        Input.SetExitKey(KeyboardKey.Null);
+
+        IFacade core = new Chip8Core(targetFPS);
+        SceneManager sceneManager = new SceneManager(core);
+        sceneManager.LoadGame(GamePath);
+
 
         while (!Window.ShouldClose()) {
             Graphics.BeginDrawing();
             Graphics.ClearBackground(Color.Black);
 
             accumulatedTime += Raylib_CSharp.Time.GetFrameTime();
-            if(accumulatedTime >= (1f / (float) targetFPS)) {
+            if(accumulatedTime >= (1f / targetFPS)) {
                 sceneManager.Run();
                 accumulatedTime -= 1f / targetFPS;
             }
             Graphics.EndDrawing();
         }
-
         Window.Close();
+    }
+
+    public static void ResizeWindow(int width, int height) {
+        if (width <= Window.GetMonitorWidth(Window.GetCurrentMonitor()) || height <= Window.GetMonitorHeight(Window.GetCurrentMonitor())) {
+            WindowWidth = width;
+            WindowHeight = height;
+
+            Window.SetSize(WindowWidth, WindowHeight);
+        }
     }
 }
