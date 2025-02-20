@@ -1,5 +1,3 @@
-using Raylib_CSharp.Windowing;
-
 namespace Chip8.src.controller;
 
 class SceneChangeClick : IClickable {

@@ -21,11 +21,11 @@ class Processor {
 
     private readonly SoundTimer _sound;
     public Processor (Memory memory, Display display, Keypad keyboard, DelayTimer delay, SoundTimer sound) {
-        this._memory = memory;
-        this._display = display;
-        this._keyboard = keyboard;
-        this._delay = delay;
-        this._sound = sound;
+        _memory = memory;
+        _display = display;
+        _keyboard = keyboard;
+        _delay = delay;
+        _sound = sound;
     }
 
     public void LoadGame(string filepath) {

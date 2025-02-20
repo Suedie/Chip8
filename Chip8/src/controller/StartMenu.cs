@@ -1,4 +1,3 @@
-using Raylib_CSharp.Interact;
 using Raylib_CSharp.Windowing;
 
 namespace Chip8.src.controller;

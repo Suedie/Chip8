@@ -1,5 +1,3 @@
-using Raylib_CSharp.Interact;
-
 namespace Chip8.src.controller;
 
 class PauseMenu : AbstractMenu {

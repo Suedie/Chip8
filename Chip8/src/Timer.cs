@@ -1,4 +1,3 @@
-using Raylib_CSharp.Windowing;
 namespace Chip8.src;
 
 public abstract class Timer {
