@@ -2,37 +2,44 @@ namespace Chip8.src.controller;
 
 class SceneManager {
 
-    private SceneIdentifier _currentScreen = SceneIdentifier.MainMenu;
+    private SceneIdentifier _currentScreen;
 
     private IFacade _model;
 
-    private GameplayScene _gameplayScene;
-    private MainMenu _mainMenu;
+    private GameplayScene _gameScene;
+    private StartMenu _startMenu;
+    private PauseMenu _pauseMenu;
 
     public void LoadGame(string filepath) {
         _model.LoadGame(filepath);
     }
 
     public SceneManager(IFacade model) {
-        this._model = model;
-        this._gameplayScene = new GameplayScene(_model);
-        this._mainMenu = new MainMenu();
+        _currentScreen = SceneIdentifier.StartMenu;
+        _model = model;
+        _gameScene = new GameplayScene(_model);
+        _startMenu = new StartMenu();
+        _pauseMenu = new PauseMenu();
     }
     
     public void Run() {
         switch (_currentScreen) {
-            case SceneIdentifier.MainMenu:
-            SwitchToScene(_mainMenu.Update());
+            case SceneIdentifier.StartMenu:
+            SwitchToScene(_startMenu.Update());
+            break;
+
+            case SceneIdentifier.GameSelect:
             break;
 
             case SceneIdentifier.OptionsMenu:
             break;
 
             case SceneIdentifier.PauseMenu:
+            SwitchToScene(_pauseMenu.Update());
             break;
 
-            case SceneIdentifier.GameplayScreen:
-            SwitchToScene(_gameplayScene.Update());
+            case SceneIdentifier.GameScreen:
+            SwitchToScene(_gameScene.Update());
             break;
         }
     }

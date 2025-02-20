@@ -1,8 +1,9 @@
 namespace Chip8.src.controller;
 
 enum SceneIdentifier {
-    MainMenu,
+    StartMenu,
+    GameSelect,
     PauseMenu,
     OptionsMenu,
-    GameplayScreen
+    GameScreen
 }
