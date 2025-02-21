@@ -11,7 +11,7 @@ namespace Chip8;
 class Program
 {
     public static int WindowWidth{get;set;} = 800;
-    public static int WindowHeight{get;set;} = 400;
+    public static int WindowHeight{get;set;} = 600;
     public static float accumulatedTime = 0f;
     public static string? GamePath;
 
@@ -21,6 +21,8 @@ class Program
         int targetFPS = 60;
 
         GamePath = "/home/deck/vscodeprojects/Chip8/Chip8/roms/IBM Logo.ch8";
+
+        Directory.CreateDirectory("./games");
         
         Raylib_CSharp.Time.SetTargetFPS(targetFPS);
 
