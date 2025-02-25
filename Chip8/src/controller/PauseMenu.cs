@@ -3,10 +3,10 @@ namespace Chip8.src.controller;
 class PauseMenu : AbstractMenu {
 
     public PauseMenu() {
+        ThisScene = SceneIdentifier.PauseMenu;
     }
 
     public override Button[] CreateButtons() {
-        ThisScene = SceneIdentifier.PauseMenu;
         Buttons = new Button[4];
         Buttons[0] = new Button(0, 0, ButtonWidth, ButtonHeight, new SceneChangeClick("Resume", SceneIdentifier.GameScreen));
         Buttons[1] = new Button(0, 0, ButtonWidth, ButtonHeight, new SceneChangeClick("Options", SceneIdentifier.OptionsMenu));

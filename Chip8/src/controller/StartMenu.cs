@@ -5,10 +5,10 @@ namespace Chip8.src.controller;
 class StartMenu : AbstractMenu {
 
     public StartMenu() {
+        ThisScene = SceneIdentifier.StartMenu;
     }
 
     public override Button[] CreateButtons() {
-        ThisScene = SceneIdentifier.StartMenu;
         Buttons = new Button[3];
         Buttons[0] = new Button(0, 0, ButtonWidth, ButtonHeight, new SceneChangeClick("Load Game", SceneIdentifier.GameScreen));
         Buttons[1] = new Button(0, 0, ButtonWidth, ButtonHeight, new SceneChangeClick("Options", SceneIdentifier.OptionsMenu));
