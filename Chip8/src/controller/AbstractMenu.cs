@@ -4,7 +4,7 @@ namespace Chip8.src.controller;
 
 abstract class AbstractMenu : IScene {
 
-    public Button[] Buttons{get; set;}
+    public Button[] Buttons{get; set;} = Array.Empty<Button>();
 
     public int ButtonWidth{get;}
     public int ButtonHeight{get;}
@@ -15,7 +15,6 @@ abstract class AbstractMenu : IScene {
         ButtonWidth = Program.WindowWidth / 4;
         ButtonHeight = Program.WindowHeight / 10;
         Spacing = ButtonHeight / 3;
-        Buttons = CreateButtons();
     }
 
     public SceneIdentifier Update() {

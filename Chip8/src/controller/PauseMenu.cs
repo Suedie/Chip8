@@ -4,6 +4,7 @@ class PauseMenu : AbstractMenu {
 
     public PauseMenu() {
         ThisScene = SceneIdentifier.PauseMenu;
+        Buttons = CreateButtons();
     }
 
     public override Button[] CreateButtons() {

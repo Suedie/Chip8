@@ -13,16 +13,14 @@ class Program
     public static int WindowWidth{get;set;} = 800;
     public static int WindowHeight{get;set;} = 600;
     public static float accumulatedTime = 0f;
-    public static string? GamePath;
+    public static readonly string GAME_DIRECTORY = "./games";
 
 
     public static void Main()
     {
         int targetFPS = 60;
 
-        GamePath = "/home/deck/vscodeprojects/Chip8/Chip8/roms/IBM Logo.ch8";
-
-        Directory.CreateDirectory("./games");
+        Directory.CreateDirectory(GAME_DIRECTORY);
         
         Raylib_CSharp.Time.SetTargetFPS(targetFPS);
 
@@ -33,7 +31,6 @@ class Program
 
         ICore core = new Chip8Core(targetFPS);
         SceneManager sceneManager = new SceneManager(core);
-        sceneManager.LoadGame(GamePath);
 
 
         while (!Window.ShouldClose()) {

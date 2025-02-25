@@ -12,9 +12,7 @@ class SceneManager {
     private IScene _pauseMenu;
     private IScene _optionsMenu;
 
-    public void LoadGame(string filepath) {
-        _emuCore.LoadGame(filepath);
-    }
+    private IScene _gameSelectMenu;
 
     public SceneManager(ICore model) {
         _currentScene = SceneIdentifier.StartMenu;
@@ -23,6 +21,7 @@ class SceneManager {
         _startMenu = new StartMenu();
         _pauseMenu = new PauseMenu();
         _optionsMenu = new OptionsMenu(_previousScene);
+        _gameSelectMenu = new GameSelectMenu(_previousScene, _emuCore);
     }
     
     public void Run() {
@@ -32,6 +31,7 @@ class SceneManager {
             break;
 
             case SceneIdentifier.GameSelect:
+            SwitchToScene(_gameSelectMenu.Update());
             break;
 
             case SceneIdentifier.OptionsMenu:

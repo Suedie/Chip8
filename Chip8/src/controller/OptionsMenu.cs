@@ -7,6 +7,7 @@ class OptionsMenu : AbstractMenu {
     public OptionsMenu(SceneIdentifier previousScene) {
         ThisScene = SceneIdentifier.OptionsMenu;
         PreviousScene = previousScene;
+        Buttons = CreateButtons();
     }
 
     public override Button[] CreateButtons() {
