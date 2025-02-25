@@ -33,6 +33,7 @@ class Processor {
         PC = 0x200;
         I = 0;
         Array.Clear(_registers, 0, _registers.Length);
+        _display.ClearDisplay();
     }
 
     public byte[,] GetScreenMatrix() {
