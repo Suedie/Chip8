@@ -4,7 +4,7 @@ using Raylib_CSharp.Rendering;
 using Raylib_CSharp.Windowing;
 
 using Chip8.src;
-using Chip8.src.controller;
+using Chip8.src.frontend;
 
 namespace Chip8;
 
