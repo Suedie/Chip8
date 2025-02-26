@@ -22,7 +22,7 @@ class GameSelectMenu : AbstractMenu {
     public override void AlignButtons() {
         CheckIfScroll();
         ButtonWidth = Program.WindowWidth - (Program.WindowWidth / 10);
-        for (int i = 0; i < _gamePaths.Length; i++) {
+        for (int i = 0; i < Buttons.Length; i++) {
             Buttons[i].Width = ButtonWidth;
         }
 
