@@ -22,12 +22,12 @@ class ResolutionChangeClick : IClickable {
     }
 
     private void CycleResolution() {
+        _index++;
         if (_index >= resolutions.Length) {
             _index = 0;
         }
         int width = resolutions[_index].Item1;
         int height = resolutions[_index].Item2;
-        _index++;
 
         ResizeWindow(width, height);
         SetLabel();
