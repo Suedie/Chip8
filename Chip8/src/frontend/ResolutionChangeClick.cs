@@ -4,11 +4,11 @@ namespace Chip8.src.frontend;
 
 class ResolutionChangeClick : IClickable {
 
-    private string _label;
+    private string _label = "0 x 0";
     public string Label {
         get {SetLabel(); return _label;} set => _label = value;}
     private int _index = 0;
-    private (int, int)[] resolutions;
+    private (int, int)[] resolutions = Array.Empty<(int, int)>();
 
     public ResolutionChangeClick() {
         Init();
