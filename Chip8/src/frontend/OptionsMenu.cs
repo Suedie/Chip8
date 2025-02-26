@@ -24,4 +24,17 @@ class OptionsMenu : AbstractMenu {
         return PreviousScene;
     }
 
+    public override void AlignButtons()
+    {
+        ButtonWidth = Program.WindowWidth / 4;
+        ButtonHeight = Program.WindowHeight / 10;
+        Spacing = ButtonHeight / 3;
+
+        for (int i = 0; i < Buttons.Length; i++) {
+            Buttons[i].Width = ButtonWidth;
+            Buttons[i].Height = ButtonHeight;
+        }
+        base.AlignButtons();
+    }
+
 }
