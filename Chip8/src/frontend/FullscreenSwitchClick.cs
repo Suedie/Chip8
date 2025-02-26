@@ -4,7 +4,7 @@ namespace Chip8.src.frontend;
 
 class FullscreenSwitchClick : IClickable {
 
-    private string _label;
+    private string _label = "Windowed";
     public string Label
     {
         get { GetCurrentWindowMode(); return _label; }
@@ -15,7 +15,7 @@ class FullscreenSwitchClick : IClickable {
         GetCurrentWindowMode();
     }
 
-    public SceneIdentifier onClick(int mouseX, int mouseY, SceneIdentifier currentScene, bool wasClicked) {
+    public SceneIdentifier OnClick(int mouseX, int mouseY, SceneIdentifier currentScene, bool wasClicked) {
         if (wasClicked) {
             SwitchWindowMode();
         }

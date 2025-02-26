@@ -12,7 +12,7 @@ class GameSelectClick : IClickable {
         _gameCore = gameCore;
     }
 
-    public SceneIdentifier onClick(int mouseX, int mouseY, SceneIdentifier currentScene, bool wasClicked) {
+    public SceneIdentifier OnClick(int mouseX, int mouseY, SceneIdentifier currentScene, bool wasClicked) {
         if (wasClicked) {
             _gameCore.LoadGame(_path);
             return SceneIdentifier.GameScreen;

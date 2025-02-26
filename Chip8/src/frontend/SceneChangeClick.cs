@@ -10,7 +10,7 @@ class SceneChangeClick : IClickable {
         _nextScene = nextScene;
     }
 
-    public SceneIdentifier onClick(int mouseX, int mouseY, SceneIdentifier currentScene, bool wasClicked) {
+    public SceneIdentifier OnClick(int mouseX, int mouseY, SceneIdentifier currentScene, bool wasClicked) {
         if (wasClicked) {
             return _nextScene;
         }

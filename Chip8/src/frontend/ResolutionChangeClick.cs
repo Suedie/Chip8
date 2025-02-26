@@ -14,14 +14,14 @@ class ResolutionChangeClick : IClickable {
         Init();
     }
 
-    public SceneIdentifier onClick(int mouseX, int mouseY, SceneIdentifier currentScene, bool wasClicked) {
+    public SceneIdentifier OnClick(int mouseX, int mouseY, SceneIdentifier currentScene, bool wasClicked) {
         if (wasClicked && !Window.IsFullscreen()) {
-            cycleResolution();
+            CycleResolution();
         }
         return currentScene;
     }
 
-    private void cycleResolution() {
+    private void CycleResolution() {
         if (_index >= resolutions.Length) {
             _index = 0;
         }

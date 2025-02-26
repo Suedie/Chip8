@@ -11,7 +11,7 @@ class Button {
     public int Width;
     public int Height;
     private string _label;
-    private IClickable _clickBehaviour;
+    private readonly IClickable _clickBehaviour;
 
     public Button (int x, int y, int width, int height, IClickable clickBehaviour) {
         PosX = x;
@@ -25,7 +25,7 @@ class Button {
     public void DrawButton() {
         Color color = Color.RayWhite;
 
-        if (mouseOverlaps(Input.GetMouseX(), Input.GetMouseY())) {
+        if (MouseOverlaps(Input.GetMouseX(), Input.GetMouseY())) {
             color = Color.Gray;
         }
         Graphics.DrawRectangle(PosX, PosY, Width, Height, color);
@@ -33,7 +33,7 @@ class Button {
         Graphics.DrawText(_label,PosX + (Width / 10), PosY + (Height / 2), Height / 3, Color.Black);
     }
 
-    private bool mouseOverlaps(int mouseX, int mouseY) {
+    private bool MouseOverlaps(int mouseX, int mouseY) {
         if (mouseX < PosX || mouseX > PosX + Width || mouseY < PosY || mouseY > PosY + Height) {
             return false;
         } else {
@@ -42,6 +42,6 @@ class Button {
     }
 
     public SceneIdentifier OnClick(int mouseX, int mouseY, SceneIdentifier currentScene) {
-        return _clickBehaviour.onClick(mouseX, mouseY, currentScene, mouseOverlaps(mouseX, mouseY));
+        return _clickBehaviour.OnClick(mouseX, mouseY, currentScene, MouseOverlaps(mouseX, mouseY));
     }
 }

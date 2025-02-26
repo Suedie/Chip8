@@ -10,7 +10,7 @@ class ExitClick : IClickable {
         Label = label;
     }
 
-    public SceneIdentifier onClick(int mouseX, int mouseY, SceneIdentifier currentScene, bool wasClicked) {
+    public SceneIdentifier OnClick(int mouseX, int mouseY, SceneIdentifier currentScene, bool wasClicked) {
         if (wasClicked) {
             Window.Close();
         }

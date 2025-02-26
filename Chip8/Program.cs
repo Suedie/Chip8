@@ -30,9 +30,9 @@ class Program
 
         Input.SetExitKey(KeyboardKey.Null);
 
-        Chip8Core core = new Chip8Core(targetFPS);
-        Chip8Renderer renderer = new Chip8Renderer(core);
-        SceneManager sceneManager = new SceneManager(core, renderer);
+        Chip8Core core = new(targetFPS);
+        Chip8Renderer renderer = new(core);
+        SceneManager sceneManager = new(core, renderer);
 
 
         while (!Window.ShouldClose()) {

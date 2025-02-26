@@ -4,7 +4,7 @@ using Raylib_CSharp.Rendering;
 namespace Chip8.src.rendering;
 
 class Chip8Renderer : IRenderer {
-    private Chip8Core _chip8Core;
+    private readonly Chip8Core _chip8Core;
 
     public int WindowWidth = Program.WindowWidth;
     public int WindowHeight = Program.WindowHeight;

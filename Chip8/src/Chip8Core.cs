@@ -12,10 +12,10 @@ class Chip8Core : ICore {
     //Higher results in smoother controls
     //Lower gives smoother gameplay
     //600-700 is a good middle ground
-    private float _CPUCyclesPerSecond = 700f;
+    private readonly float _CPUCyclesPerSecond = 700f;
     private bool _debugEnabled = false;
     private bool _isHalted = false;
-    private string _currentGamepath;
+    private string? _currentGamepath;
 
     public Chip8Core(int targetFPS) {
         this.TargetFPS = targetFPS;
@@ -88,7 +88,11 @@ class Chip8Core : ICore {
             Processor.PrintMemorySnippet(20);
         }
         if (Input.IsKeyPressed(KeyboardKey.Enter)) { //Reloads game
-            Processor.LoadGame(_currentGamepath);
+            try {
+                Processor.LoadGame(_currentGamepath);
+            } catch (NullReferenceException) {
+                Console.WriteLine("No game loaded");
+            }
         }
     }
 }
