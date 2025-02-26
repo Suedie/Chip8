@@ -1,4 +1,4 @@
-namespace Chip8.src;
+namespace Chip8.src.emulator;
 
 public interface IFont {
 
