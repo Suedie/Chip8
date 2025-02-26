@@ -13,11 +13,12 @@ class PauseMenu : AbstractMenu
 
     public override Button[] CreateButtons()
     {
-        Buttons = new Button[4];
+        Buttons = new Button[5];
         Buttons[0] = new Button(0, 0, ButtonWidth, ButtonHeight, new SceneChangeClick("Resume", SceneIdentifier.GameScreen));
-        Buttons[1] = new Button(0, 0, ButtonWidth, ButtonHeight, new SceneChangeClick("Options", SceneIdentifier.OptionsMenu));
-        Buttons[2] = new Button(0, 0, ButtonWidth, ButtonHeight, new SceneChangeClick("Exit to main menu", SceneIdentifier.StartMenu));
-        Buttons[3] = new Button(0, 0, ButtonWidth, ButtonHeight, new ExitClick("Exit to desktop"));
+        Buttons[1] = new Button(0, 0, ButtonWidth, ButtonHeight, new SceneChangeClick("Load new game", SceneIdentifier.GameSelect));
+        Buttons[2] = new Button(0, 0, ButtonWidth, ButtonHeight, new SceneChangeClick("Options", SceneIdentifier.OptionsMenu));
+        Buttons[3] = new Button(0, 0, ButtonWidth, ButtonHeight, new SceneChangeClick("Exit to main menu", SceneIdentifier.StartMenu));
+        Buttons[4] = new Button(0, 0, ButtonWidth, ButtonHeight, new ExitClick("Exit to desktop"));
         AlignButtons();
 
         return Buttons;
