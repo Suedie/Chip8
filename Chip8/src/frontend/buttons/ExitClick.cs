@@ -1,6 +1,7 @@
+using Chip8.src.frontend.scenes;
 using Raylib_CSharp.Windowing;
 
-namespace Chip8.src.frontend;
+namespace Chip8.src.frontend.buttons;
 
 class ExitClick : IClickable {
 

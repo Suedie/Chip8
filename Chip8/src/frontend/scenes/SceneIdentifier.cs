@@ -1,6 +1,7 @@
-namespace Chip8.src.frontend;
+namespace Chip8.src.frontend.scenes;
 
-enum SceneIdentifier {
+enum SceneIdentifier
+{
     StartMenu,
     GameSelect,
     PauseMenu,

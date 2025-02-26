@@ -1,13 +1,18 @@
-namespace Chip8.src.frontend;
+using Chip8.src.frontend.buttons;
 
-class PauseMenu : AbstractMenu {
+namespace Chip8.src.frontend.scenes;
 
-    public PauseMenu() {
+class PauseMenu : AbstractMenu
+{
+
+    public PauseMenu()
+    {
         ThisScene = SceneIdentifier.PauseMenu;
         Buttons = CreateButtons();
     }
 
-    public override Button[] CreateButtons() {
+    public override Button[] CreateButtons()
+    {
         Buttons = new Button[4];
         Buttons[0] = new Button(0, 0, ButtonWidth, ButtonHeight, new SceneChangeClick("Resume", SceneIdentifier.GameScreen));
         Buttons[1] = new Button(0, 0, ButtonWidth, ButtonHeight, new SceneChangeClick("Options", SceneIdentifier.OptionsMenu));
@@ -18,7 +23,8 @@ class PauseMenu : AbstractMenu {
         return Buttons;
     }
 
-    public override SceneIdentifier Back() {
+    public override SceneIdentifier Back()
+    {
         return SceneIdentifier.GameScreen;
     }
 

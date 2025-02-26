@@ -1,8 +1,9 @@
+using Chip8.src.frontend.scenes;
 using Raylib_CSharp.Colors;
 using Raylib_CSharp.Interact;
 using Raylib_CSharp.Rendering;
 
-namespace Chip8.src.frontend;
+namespace Chip8.src.frontend.buttons;
 
 class Button {
 

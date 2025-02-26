@@ -1,16 +1,21 @@
-namespace Chip8.src.frontend;
+using Chip8.src.frontend.buttons;
 
-class OptionsMenu : AbstractMenu {
+namespace Chip8.src.frontend.scenes;
+
+class OptionsMenu : AbstractMenu
+{
 
     public SceneIdentifier PreviousScene;
 
-    public OptionsMenu(SceneIdentifier previousScene) {
+    public OptionsMenu(SceneIdentifier previousScene)
+    {
         ThisScene = SceneIdentifier.OptionsMenu;
         PreviousScene = previousScene;
         Buttons = CreateButtons();
     }
 
-    public override Button[] CreateButtons() {
+    public override Button[] CreateButtons()
+    {
         Buttons = new Button[3];
         Buttons[0] = new Button(0, 0, ButtonWidth, ButtonHeight, new FullscreenSwitchClick());
         Buttons[1] = new Button(0, 0, ButtonWidth, ButtonHeight, new ResolutionChangeClick());
@@ -20,7 +25,8 @@ class OptionsMenu : AbstractMenu {
         return Buttons;
     }
 
-    public override SceneIdentifier Back() {
+    public override SceneIdentifier Back()
+    {
         return PreviousScene;
     }
 
@@ -30,7 +36,8 @@ class OptionsMenu : AbstractMenu {
         ButtonHeight = Program.WindowHeight / 10;
         Spacing = ButtonHeight / 3;
 
-        for (int i = 0; i < Buttons.Length; i++) {
+        for (int i = 0; i < Buttons.Length; i++)
+        {
             Buttons[i].Width = ButtonWidth;
             Buttons[i].Height = ButtonHeight;
         }
