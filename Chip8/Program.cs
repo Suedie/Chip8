@@ -6,6 +6,7 @@ using Raylib_CSharp.Windowing;
 using Chip8.src.emulator;
 using Chip8.src.frontend;
 using Chip8.src.rendering;
+using Raylib_CSharp.Images;
 
 namespace Chip8;
 
@@ -26,6 +27,7 @@ class Program
         Raylib_CSharp.Time.SetTargetFPS(targetFPS);
 
         Window.Init(WindowWidth, WindowHeight, "CHIP-8");
+        Window.SetIcon(Image.Load("c8.png"));
         Window.SetMaxSize(Window.GetMonitorWidth(Window.GetCurrentMonitor()), Window.GetMonitorHeight(Window.GetCurrentMonitor()));
 
         Input.SetExitKey(KeyboardKey.Null);
