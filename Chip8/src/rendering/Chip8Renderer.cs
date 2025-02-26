@@ -25,6 +25,9 @@ class Chip8Renderer : IRenderer {
         int xOffset = (Program.WindowWidth - (64 * scale)) / 2;
         int yOffset = (Program.WindowHeight - (32 * scale)) / 2;
 
+        //The Chip-8 screen was a grid of pixels that would be flipped on or off
+        //This program takes a matrix that represents all on and off pixels,
+        //and draws a square at each on pixels position
         for (int pixelRow = 0; pixelRow < pixels.GetLength(0); pixelRow++) {
             for (int pixelColumn = 0; pixelColumn < pixels.GetLength(1); pixelColumn++) {
                 if(pixels[pixelRow, pixelColumn] == 1) {

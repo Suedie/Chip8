@@ -29,6 +29,7 @@ class ResolutionChangeClick : IClickable
         return currentScene;
     }
 
+    //Every time it is called the index is increased and a new corresponding resolution is loaded from the array
     private void CycleResolution()
     {
         _index++;
@@ -43,6 +44,9 @@ class ResolutionChangeClick : IClickable
         SetLabel();
     }
 
+    //Creates a list of resolutions then sets the index to match the current resolution
+    //so that it will cycle correctly
+    //It then sets the label of the button to match the current resolution
     private void Init()
     {
         SetList();

@@ -23,6 +23,8 @@ class FullscreenSwitchClick : IClickable {
         return currentScene;
     }
 
+    //When clicked will toggle between fullscreen and windowed modes
+    //The window will automatically be centered when switching to windowed mode
     private void SwitchWindowMode() {
         if (Window.IsFullscreen()) {
             Window.ToggleFullscreen();

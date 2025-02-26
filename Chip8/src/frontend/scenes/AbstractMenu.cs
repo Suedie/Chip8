@@ -18,6 +18,11 @@ abstract class AbstractMenu : IScene {
         Spacing = ButtonHeight / 3;
     }
 
+    //Every button is realigned every frame in case the resolution changes.
+    //This is mostly a holdover from when menus were persistent
+    //It is still used by the options menu when the resolution changes
+    //A possible refactor is to make this virtual and let each submenu add logic it needs
+    //Checks if each button on screen was pressed, then returns what the next scene of the program should be
     public SceneIdentifier Update() {
         AlignButtons();
         Draw();
@@ -38,6 +43,7 @@ abstract class AbstractMenu : IScene {
 
     abstract public SceneIdentifier Back();
 
+    //Aligns the buttons so that the middle button is centered
     public virtual void AlignButtons() {
         int buttonX = (Program.WindowWidth / 2) - (ButtonWidth / 2);
         int firstButtonY = (Program.WindowHeight / 2) - (((Buttons.Length * ButtonHeight) + ((Buttons.Length-1) * Spacing)) / 2);

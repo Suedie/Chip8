@@ -25,6 +25,9 @@ class SceneManager {
         _gameScene = new GameplayScene(_emuCore, _emuRenderer);
     }
     
+    //Switches to a scene based on the enum that identifies the scene
+    //Menus are recreated every time they are switched to
+    //Game is persistent
     public void SwitchToScene(SceneIdentifier sceneID) {
         switch (sceneID) {
             case SceneIdentifier.StartMenu:
@@ -49,8 +52,11 @@ class SceneManager {
         }
     }
 
+    //When a scene is updated it returns an enum that represents the next scene.
+    //If the next scene is different from the current scene the scene is switched
     public void Run() {
         _nextSceneID = _currentScene.Update();
+
         if (_nextSceneID != _currentSceneID) {
             _previousSceneID = _currentSceneID;
             _currentSceneID = _nextSceneID;

@@ -10,6 +10,7 @@ class GameSelectClick : IClickable
     private string _path;
     private ICore _gameCore;
 
+    //When clicked will load the game specified by the path variable
     public GameSelectClick(string path, ICore gameCore)
     {
         _path = path;

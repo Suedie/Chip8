@@ -7,6 +7,7 @@ class ExitClick : IClickable {
 
     public string Label{get;} = "Exit";
 
+    //This button behaviour simply closes the window when clicked
     public ExitClick(string label) {
         Label = label;
     }

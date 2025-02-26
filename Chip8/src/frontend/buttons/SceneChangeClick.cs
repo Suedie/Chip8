@@ -8,6 +8,7 @@ class SceneChangeClick : IClickable
     public string Label { get; }
     private SceneIdentifier _nextScene;
 
+    //When clicked will return a scene identifier that signals to the program that another scene should be loaded
     public SceneChangeClick(string label, SceneIdentifier nextScene)
     {
         Label = label;

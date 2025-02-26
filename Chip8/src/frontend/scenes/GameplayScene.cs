@@ -15,6 +15,8 @@ class GameplayScene : IScene
         _emuRenderer = emuRenderer;
     }
 
+    //Updates the core/model and then tells the view to render it
+    //Listens for Escape to pause and unpause the game
     public SceneIdentifier Update()
     {
         _emuCore.Update();

@@ -30,6 +30,8 @@ class OptionsMenu : AbstractMenu
         return PreviousScene;
     }
 
+    //This custom AlignButtons method resizes and realigns the buttons 
+    //every frame in case the screen resolution changes
     public override void AlignButtons()
     {
         ButtonWidth = Program.WindowWidth / 4;

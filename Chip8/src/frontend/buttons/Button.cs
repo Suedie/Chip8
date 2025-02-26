@@ -14,6 +14,9 @@ class Button {
     private string _label;
     private readonly IClickable _clickBehaviour;
 
+    //Each button must be created with a behaviour object
+    //Each button is identical but what it does is defined by
+    //the behaviour object that it holds, allowing for many custom buttons
     public Button (int x, int y, int width, int height, IClickable clickBehaviour) {
         PosX = x;
         PosY = y;
@@ -23,6 +26,8 @@ class Button {
         _label = _clickBehaviour.Label;
     }
 
+    //Each button draws itself, and will change colour when hovered over
+    //Also each button draws its own text based on the label variable
     public void DrawButton() {
         Color color = Color.RayWhite;
 
@@ -42,6 +47,7 @@ class Button {
         }
     }
 
+    //When clicked will execute logic that is contained in the Clickbehaviour object
     public SceneIdentifier OnClick(int mouseX, int mouseY, SceneIdentifier currentScene) {
         return _clickBehaviour.OnClick(mouseX, mouseY, currentScene, MouseOverlaps(mouseX, mouseY));
     }
