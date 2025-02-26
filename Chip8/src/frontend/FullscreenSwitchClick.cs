@@ -27,6 +27,8 @@ class FullscreenSwitchClick : IClickable {
             Window.ToggleFullscreen();
             Label = "Windowed";
             Window.SetSize(Program.WindowWidth, Program.WindowHeight);
+            Window.SetPosition((Window.GetMonitorWidth(Window.GetCurrentMonitor()) / 2) - (Program.WindowWidth / 2),
+             (Window.GetMonitorHeight(Window.GetCurrentMonitor()) / 2) - (Program.WindowHeight / 2));
         } else {
             Label = "Fullscreen";
             Program.WindowWidth = Window.GetMonitorWidth(Window.GetCurrentMonitor());
