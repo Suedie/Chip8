@@ -11,7 +11,7 @@ class ResolutionChangeClick : IClickable {
     private (int, int)[] resolutions;
 
     public ResolutionChangeClick() {
-        init();
+        Init();
     }
 
     public SceneIdentifier onClick(int mouseX, int mouseY, SceneIdentifier currentScene, bool wasClicked) {
@@ -33,7 +33,7 @@ class ResolutionChangeClick : IClickable {
         SetLabel();
     }
 
-    private void init() {
+    private void Init() {
         SetList();
         for (int i = 0; i < resolutions.Length; i++) {
             if (Program.WindowWidth == resolutions[i].Item1 && Program.WindowHeight == resolutions[i].Item2) {

@@ -5,6 +5,7 @@ using Raylib_CSharp.Windowing;
 
 using Chip8.src;
 using Chip8.src.frontend;
+using Chip8.src.rendering;
 
 namespace Chip8;
 
@@ -29,8 +30,9 @@ class Program
 
         Input.SetExitKey(KeyboardKey.Null);
 
-        ICore core = new Chip8Core(targetFPS);
-        SceneManager sceneManager = new SceneManager(core);
+        Chip8Core core = new Chip8Core(targetFPS);
+        Chip8Renderer renderer = new Chip8Renderer(core);
+        SceneManager sceneManager = new SceneManager(core, renderer);
 
 
         while (!Window.ShouldClose()) {

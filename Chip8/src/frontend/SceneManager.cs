@@ -1,3 +1,5 @@
+using Chip8.src.rendering;
+
 namespace Chip8.src.frontend;
 
 class SceneManager {
@@ -6,6 +8,7 @@ class SceneManager {
     private SceneIdentifier _currentScene;
 
     private ICore _emuCore;
+    private IRenderer _emuRenderer;
 
     private IScene _gameScene;
     private IScene _startMenu;
@@ -14,10 +17,12 @@ class SceneManager {
 
     private IScene _gameSelectMenu;
 
-    public SceneManager(ICore model) {
+    public SceneManager(ICore emucore, IRenderer emuRenderer) {
+        _previousScene = SceneIdentifier.StartMenu;
         _currentScene = SceneIdentifier.StartMenu;
-        _emuCore = model;
-        _gameScene = new GameplayScene(_emuCore);
+        _emuCore = emucore;
+        _emuRenderer = emuRenderer;
+        _gameScene = new GameplayScene(_emuCore, _emuRenderer);
         _startMenu = new StartMenu();
         _pauseMenu = new PauseMenu();
         _optionsMenu = new OptionsMenu(_previousScene);
