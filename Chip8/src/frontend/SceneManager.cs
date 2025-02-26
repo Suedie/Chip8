@@ -43,7 +43,7 @@ class SceneManager {
             break;
 
             case SceneIdentifier.PauseMenu:
-            _currentScene = new PauseMenu();
+            _currentScene = new PauseMenu(_emuCore);
             break;
 
             case SceneIdentifier.GameScreen:

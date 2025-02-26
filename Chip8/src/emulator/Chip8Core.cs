@@ -15,6 +15,7 @@ class Chip8Core : ICore {
     private readonly float _CPUCyclesPerSecond = 700f;
     private bool _debugEnabled = false;
     private bool _isHalted = false;
+    public string CurrentGamePath{get {return _currentGamepath;}}
     private string? _currentGamepath;
 
     public Chip8Core(int targetFPS) {
