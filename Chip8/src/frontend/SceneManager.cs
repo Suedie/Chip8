@@ -5,57 +5,55 @@ namespace Chip8.src.frontend;
 
 class SceneManager {
 
-    private SceneIdentifier _previousScene;
-    private SceneIdentifier _currentScene;
+    private SceneIdentifier _previousSceneID;
+    private SceneIdentifier _currentSceneID;
+    private SceneIdentifier _nextSceneID;
+    private IScene _currentScene;
 
     private readonly ICore _emuCore;
     private readonly IRenderer _emuRenderer;
 
     private readonly IScene _gameScene;
-    private readonly IScene _startMenu;
-    private readonly IScene _pauseMenu;
-    private readonly IScene _optionsMenu;
-
-    private readonly IScene _gameSelectMenu;
 
     public SceneManager(ICore emucore, IRenderer emuRenderer) {
-        _previousScene = SceneIdentifier.StartMenu;
-        _currentScene = SceneIdentifier.StartMenu;
+        _previousSceneID = SceneIdentifier.StartMenu;
+        _currentSceneID = SceneIdentifier.StartMenu;
         _emuCore = emucore;
         _emuRenderer = emuRenderer;
+        _currentScene = new StartMenu();
         _gameScene = new GameplayScene(_emuCore, _emuRenderer);
-        _startMenu = new StartMenu();
-        _pauseMenu = new PauseMenu();
-        _optionsMenu = new OptionsMenu(_previousScene);
-        _gameSelectMenu = new GameSelectMenu(_previousScene, _emuCore);
     }
     
-    public void Run() {
-        switch (_currentScene) {
+    public void SwitchToScene(SceneIdentifier sceneID) {
+        switch (sceneID) {
             case SceneIdentifier.StartMenu:
-            SwitchToScene(_startMenu.Update());
+            _currentScene = new StartMenu();
             break;
 
             case SceneIdentifier.GameSelect:
-            SwitchToScene(_gameSelectMenu.Update());
+            _currentScene = new GameSelectMenu(_previousSceneID, _emuCore);
             break;
 
             case SceneIdentifier.OptionsMenu:
-            SwitchToScene(_optionsMenu.Update());
+            _currentScene = new OptionsMenu(_previousSceneID);
             break;
 
             case SceneIdentifier.PauseMenu:
-            SwitchToScene(_pauseMenu.Update());
+            _currentScene = new PauseMenu();
             break;
 
             case SceneIdentifier.GameScreen:
-            SwitchToScene(_gameScene.Update());
+            _currentScene = _gameScene;
             break;
         }
     }
 
-    public void SwitchToScene(SceneIdentifier scene) {
-        _previousScene = _currentScene;
-        _currentScene = scene;
+    public void Run() {
+        _nextSceneID = _currentScene.Update();
+        if (_nextSceneID != _currentSceneID) {
+            _previousSceneID = _currentSceneID;
+            _currentSceneID = _nextSceneID;
+            SwitchToScene(_nextSceneID);
+        }
     }
 }
