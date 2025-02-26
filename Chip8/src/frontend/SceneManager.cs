@@ -1,4 +1,4 @@
-namespace Chip8.src.controller;
+namespace Chip8.src.frontend;
 
 class SceneManager {
 

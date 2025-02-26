@@ -1,6 +1,6 @@
 using Raylib_CSharp.Interact;
 
-namespace Chip8.src.controller;
+namespace Chip8.src.frontend;
 
 abstract class AbstractMenu : IScene {
 

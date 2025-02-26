@@ -2,7 +2,7 @@ using Raylib_CSharp.Colors;
 using Raylib_CSharp.Interact;
 using Raylib_CSharp.Rendering;
 
-namespace Chip8.src.controller;
+namespace Chip8.src.frontend;
 
 class Button {
 
