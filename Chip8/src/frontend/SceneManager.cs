@@ -7,15 +7,15 @@ class SceneManager {
     private SceneIdentifier _previousScene;
     private SceneIdentifier _currentScene;
 
-    private ICore _emuCore;
-    private IRenderer _emuRenderer;
+    private readonly ICore _emuCore;
+    private readonly IRenderer _emuRenderer;
 
-    private IScene _gameScene;
-    private IScene _startMenu;
-    private IScene _pauseMenu;
-    private IScene _optionsMenu;
+    private readonly IScene _gameScene;
+    private readonly IScene _startMenu;
+    private readonly IScene _pauseMenu;
+    private readonly IScene _optionsMenu;
 
-    private IScene _gameSelectMenu;
+    private readonly IScene _gameSelectMenu;
 
     public SceneManager(ICore emucore, IRenderer emuRenderer) {
         _previousScene = SceneIdentifier.StartMenu;
