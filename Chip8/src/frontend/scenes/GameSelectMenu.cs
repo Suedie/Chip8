@@ -11,6 +11,7 @@ class GameSelectMenu : AbstractMenu {
     private ICore _gameCore;
     private string[] _gamePaths;
     private int _scrollOffset = 0;
+    private int _yMargin = Program.WindowHeight / 20;
     public GameSelectMenu(SceneIdentifier previousScene, ICore gameCore) {
         ThisScene = SceneIdentifier.GameSelect;
         PreviousScene = previousScene;
@@ -22,16 +23,19 @@ class GameSelectMenu : AbstractMenu {
     //Resizes the buttons specifically for this menu to be the width of the screen -10%
     //Aligns them along the middle but allows for scrolling in case there are more games than fits on the screen
     public override void AlignButtons() {
-        CheckIfScroll();
         ButtonWidth = Program.WindowWidth - (Program.WindowWidth / 10);
+        _yMargin = Program.WindowHeight / 20;
+        
+        CheckIfScroll();
+
         for (int i = 0; i < Buttons.Length; i++) {
             Buttons[i].Width = ButtonWidth;
         }
 
         int buttonX = (Program.WindowWidth / 2) - (ButtonWidth / 2);
         int firstButtonY = (Program.WindowHeight / 2) - (((Buttons.Length * ButtonHeight) + ((Buttons.Length-1) * Spacing)) / 2);
-        if (firstButtonY < (Program.WindowHeight / 20)) {
-            firstButtonY = Program.WindowHeight / 20;
+        if (firstButtonY < _yMargin) {
+            firstButtonY = _yMargin;
         }
 
         for (int i = 0; i < Buttons.Length; i++) {
@@ -49,8 +53,8 @@ class GameSelectMenu : AbstractMenu {
         if (Program.WindowHeight < GetAllButtonHeight()) {
             if (_scrollOffset + scroll >= 0) {
                 _scrollOffset = 0;
-            } else if (_scrollOffset + scroll <= Program.WindowHeight - (Program.WindowHeight / 20) - GetAllButtonHeight()) {
-                _scrollOffset = Program.WindowHeight - (Program.WindowHeight / 20) - GetAllButtonHeight();
+            } else if (_scrollOffset + scroll <= Program.WindowHeight - _yMargin - GetAllButtonHeight()) {
+                _scrollOffset = Program.WindowHeight - _yMargin - GetAllButtonHeight();
             } else {
                 _scrollOffset += scroll;
             }
