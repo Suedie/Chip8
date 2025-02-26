@@ -4,13 +4,13 @@ class ProcessorFactory {
 
     public static Processor MakeProecessor() {
 
-    Memory memory = new Memory(new Font());
-    Display display = new Display();
-    Keypad keypad = new Keypad();
-    DelayTimer delay = new DelayTimer();
-    SoundTimer sound = new SoundTimer();
+    Memory memory = new(new Font());
+    Display display = new();
+    Keypad keypad = new();
+    DelayTimer delay = new();
+    SoundTimer sound = new();
 
-    Processor processor = new Processor(memory, display, keypad, delay, sound);
+    Processor processor = new(memory, display, keypad, delay, sound);
 
     return processor;
     }

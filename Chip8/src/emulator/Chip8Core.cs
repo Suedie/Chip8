@@ -18,7 +18,7 @@ class Chip8Core : ICore {
     private string? _currentGamepath;
 
     public Chip8Core(int targetFPS) {
-        this.TargetFPS = targetFPS;
+        TargetFPS = targetFPS;
         InstructionsPerFrame = _CPUCyclesPerSecond / (float) targetFPS;
         Processor = ProcessorFactory.MakeProecessor();
     }

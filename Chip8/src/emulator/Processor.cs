@@ -9,7 +9,7 @@ class Processor {
 
     private readonly byte[] _registers = new byte[0x10];
 
-    private readonly Random _rnd = new Random();
+    private readonly Random _rnd = new();
 
     private readonly Memory _memory;
 
