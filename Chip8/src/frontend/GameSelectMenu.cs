@@ -41,7 +41,8 @@ class GameSelectMenu : AbstractMenu {
     }
 
     private void CheckIfScroll() {
-        int scroll = (int) Input.GetMouseWheelMove() * 20;
+        int scrollSpeed = Program.WindowHeight / 25;
+        int scroll = (int) Input.GetMouseWheelMove() * scrollSpeed;
         if (Program.WindowHeight < GetAllButtonHeight()) {
             if (_scrollOffset + scroll >= 0) {
                 _scrollOffset = 0;
