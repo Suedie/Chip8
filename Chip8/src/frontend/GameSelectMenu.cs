@@ -1,3 +1,4 @@
+using Chip8.src.emulator;
 using Raylib_CSharp.Interact;
 
 namespace Chip8.src.frontend;

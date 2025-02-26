@@ -1,3 +1,4 @@
+using Chip8.src.emulator;
 using Raylib_CSharp.Colors;
 using Raylib_CSharp.Rendering;
 

@@ -1,3 +1,4 @@
+using Chip8.src.emulator;
 using Chip8.src.rendering;
 
 namespace Chip8.src.frontend;

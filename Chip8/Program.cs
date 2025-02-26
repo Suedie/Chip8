@@ -3,7 +3,7 @@ using Raylib_CSharp.Interact;
 using Raylib_CSharp.Rendering;
 using Raylib_CSharp.Windowing;
 
-using Chip8.src;
+using Chip8.src.emulator;
 using Chip8.src.frontend;
 using Chip8.src.rendering;
 

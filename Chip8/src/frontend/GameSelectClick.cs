@@ -1,3 +1,5 @@
+using Chip8.src.emulator;
+
 namespace Chip8.src.frontend;
 
 class GameSelectClick : IClickable {

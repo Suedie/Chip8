@@ -1,7 +1,6 @@
+using Chip8.src.emulator;
 using Chip8.src.rendering;
-using Raylib_CSharp.Colors;
 using Raylib_CSharp.Interact;
-using Raylib_CSharp.Rendering;
 
 namespace Chip8.src.frontend;
 
