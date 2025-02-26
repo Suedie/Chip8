@@ -33,6 +33,7 @@ class Chip8Core : ICore {
     }
 
     public void Update() {
+        CheckIfReload();
         if (!_debugEnabled)
             Step();
         else
@@ -87,6 +88,9 @@ class Chip8Core : ICore {
         if (Input.IsKeyPressed(KeyboardKey.K)) { //Dumps upcoming 10 locations in memory. Each opcode is 2 bytes so 20 / 2
             Processor.PrintMemorySnippet(20);
         }
+    }
+
+    public void CheckIfReload() {
         if (Input.IsKeyPressed(KeyboardKey.Enter)) { //Reloads game
             try {
                 Processor.LoadGame(_currentGamepath);
