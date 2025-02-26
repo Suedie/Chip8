@@ -8,16 +8,16 @@ class Button {
 
     public int PosX{get; set;}
     public int PosY{get; set;}
-    private int _width;
-    private int _height;
+    public int Width;
+    public int Height;
     private string _label;
     private IClickable _clickBehaviour;
 
     public Button (int x, int y, int width, int height, IClickable clickBehaviour) {
         PosX = x;
         PosY = y;
-        _width = width;
-        _height = height;
+        Width = width;
+        Height = height;
         _clickBehaviour = clickBehaviour;
         _label = _clickBehaviour.Label;
     }
@@ -28,13 +28,13 @@ class Button {
         if (mouseOverlaps(Input.GetMouseX(), Input.GetMouseY())) {
             color = Color.Gray;
         }
-        Graphics.DrawRectangle(PosX, PosY, _width, _height, color);
+        Graphics.DrawRectangle(PosX, PosY, Width, Height, color);
         _label = _clickBehaviour.Label;
-        Graphics.DrawText(_label,PosX + (_width / 10), PosY + (_height / 2), _height / 3, Color.Black);
+        Graphics.DrawText(_label,PosX + (Width / 10), PosY + (Height / 2), Height / 3, Color.Black);
     }
 
     private bool mouseOverlaps(int mouseX, int mouseY) {
-        if (mouseX < PosX || mouseX > PosX + _width || mouseY < PosY || mouseY > PosY + _height) {
+        if (mouseX < PosX || mouseX > PosX + Width || mouseY < PosY || mouseY > PosY + Height) {
             return false;
         } else {
             return true;

@@ -17,10 +17,14 @@ class GameSelectMenu : AbstractMenu {
         Buttons = CreateButtons();
     }
 
-    public override void AlignButtons()
-    {
+    public override void AlignButtons() {
+        ButtonWidth = Program.WindowWidth - (Program.WindowWidth / 10);
+        for (int i = 0; i < _gamePaths.Length; i++) {
+            Buttons[i].Width = ButtonWidth;
+        }
         base.AlignButtons();
     }
+
     public override Button[] CreateButtons() {
         UpdateGameList(Program.GAME_DIRECTORY);
         Buttons = new Button[_gamePaths.Length];

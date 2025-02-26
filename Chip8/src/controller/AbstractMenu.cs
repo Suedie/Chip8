@@ -6,9 +6,9 @@ abstract class AbstractMenu : IScene {
 
     public Button[] Buttons{get; set;} = Array.Empty<Button>();
 
-    public int ButtonWidth{get;}
-    public int ButtonHeight{get;}
-    public int Spacing{get;}
+    public int ButtonWidth{get; set;}
+    public int ButtonHeight{get; set;}
+    public int Spacing{get; set;}
     public SceneIdentifier ThisScene{get; set;}
 
     public AbstractMenu() {
