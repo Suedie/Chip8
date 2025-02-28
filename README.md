@@ -1,5 +1,10 @@
 # Chip-8 Emulator/Interpreter
+
 This is a simple Chip-8 emulator that implements the standard 35 Chip-8 opcodes. It is written entirely in C# and uses the Raylib-Csharp library for graphics and inputs
+
+# Running the code
+
+To run the code navigate into the directory /Chip8/Chip8 and run the "dotnet run" command in the terminal- 
 
 # Playing a game
 
